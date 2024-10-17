@@ -1,0 +1,86 @@
+.table__toggle {
+    width: 100%;
+    padding: 1.2rem 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 8px 8px;
+    gap: 0.8rem;
+    background-color: var(--c-white);
+    border: 0.4px solid var(--c-primaryTint);
+    border-top: none;
+}
+
+.toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toggle button {
+    padding: 0.4rem 0.6rem;
+    outline: none;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--c-primary);
+    font-weight: 500;
+    border: 1px solid var(--c-primary);
+    background-color: transparent;
+    transition: color 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+}
+
+.toggle button:disabled {
+    color: var(--c-tableShadow);
+    border-color: var(--c-tableShadow);
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
+.table__toggle p {
+    font-size: 0.9rem;
+    text-align: right;
+    font-weight: 500;
+    color: var(--c-blacks);
+}
+
+.table__toggle p span {
+    color: var(--c-primary);
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+@media (pointer: fine) and (hover: hover) {
+    .toggle button:not(:disabled):is(:hover, :focus-visible) {
+        color: var(--c-white);
+        background-color: var(--c-primaryShade);
+        border-color: var(--c-primaryShade);
+    }
+}
+
+@media all and (max-width: 600px) {
+    .toggle button span {
+        display: none;
+    }
+}
+
+@media all and (max-width: 400px) {
+    .table__toggle {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .toggle {
+        width: 100%;
+        margin-top: 0.8rem;
+        justify-content: space-between;
+    }
+}

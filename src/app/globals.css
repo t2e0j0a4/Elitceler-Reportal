@@ -1,0 +1,127 @@
+:root {
+  --c-black: #232323;
+  --c-white: #FFFFFF;
+
+  --c-primary: #D94C62;
+  --c-primaryTint: #D94C62B0;
+  --c-primaryShade: #570D18;
+
+  --c-tableHoverColor: #ffeded72;
+  --c-tableSecColor: #fff3f3;
+  --c-tableShadow: #23232330;
+
+  --c-skeletonPri: #3333330e;
+  --c-skeletonSec: #2222222b;
+  --c-skeletonGrad: linear-gradient(90deg, #2222223b, #b0b0b03f);
+
+  --c-popupBg: #323232cb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  color: var(--c-black);
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  background-color: var(--c-white);
+}
+
+/* Not Found Page */
+
+.app__notFound, .app__error {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--c-white);
+}
+.app__notFound h2, .app__error h2 {
+  font-size: 8vmin;
+  color: var(--c-black);
+  text-align: center;
+  line-height: normal;
+}
+
+.app__notFound > svg, .app__error > svg {
+  width: 180px;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.app__notFound p, .app__error p {
+  font-size: 1.12rem;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+  color: var(--c-black);
+}
+
+.error__options {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.12rem;
+}
+
+.app__notFound a, .error__options > a, .error__options > button {
+  padding: 0.6rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 8px;
+  color: var(--c-primaryShade);
+  background-color: transparent;
+  border: 1.2px solid var(--c-primaryShade);
+  outline: none;
+  text-decoration: none;
+  -webkit-transition: color 0.3s ease, background-color 0.3s ease;
+  -o-transition: color 0.3s ease, background-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.app__notFound > a:is(:focus-visible, :hover) {
+  background-color: var(--c-primaryShade);
+  color: var(--c-white);
+}
+
+.error__options > button {
+  background-color: var(--c-primary);
+  color: var(--c-black);
+  border-color: var(--c-primary);
+}
+
+@media (pointer: fine) and (hover: hover) {
+  .app__notfound > a:is(:hover, :focus-visible), .error__options > a:is(:hover, :focus-visible) {
+    background-color: var(--c-primaryShade);
+    color: var(--c-white);
+    border-color: var(--c-primaryShade);
+  }
+
+  .error__options > button:is(:hover, :focus-visible) {
+    background-color: var(--c-primary);
+    color: var(--c-white);
+    border-color: var(--c-primary);
+  }
+}
+
+/* Not Found Page */
+
+@media all and (max-width: 700px) {
+  * {
+    cursor: default !important;
+  }
+}

@@ -1,0 +1,16 @@
+.home__recents {
+    width: 100%;
+    padding: 0.2rem;
+    margin: 2rem 0 1.2rem;
+}
+
+.home__recents > h2 {
+    text-align: left;
+    font-size: 1.52rem;
+    font-weight: 600;
+    color: var(--c-primary);
+}
+
+.home__recents > h2 span {
+    color: var(--c-black);
+}

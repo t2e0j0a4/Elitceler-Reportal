@@ -1,0 +1,68 @@
+.form__input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.4rem;
+}
+
+.form__input > label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--c-primaryShade);
+    text-align: left;
+}
+
+.form__input > input {
+    width: 100%;
+    padding: 0.48rem 0.7rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1.2px solid transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.8rem;
+    box-shadow: 0 0 1px 0.8px #23232330;
+    transition: all 0.3s ease;
+}
+
+
+.form__input > input[type=date] {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form__input > input[type="date"]::-webkit-calendar-picker-indicator {
+    color: var(--c-primaryShade); /* Change the color of the default icon */
+    position: absolute;
+    right: 10px; /* Position it inside the input */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px; /* Resize the icon */
+}
+
+.form__input > input[type=date]::-moz-calendar-picker-indicator {
+    color: var(--c-primaryShade);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.form__input > input:focus {
+    border-color: var(--c-primaryShade);
+}

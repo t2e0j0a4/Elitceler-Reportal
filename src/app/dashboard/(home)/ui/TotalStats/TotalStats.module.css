@@ -1,0 +1,51 @@
+.home__totalStats {
+    width: 100%;
+    padding: 0.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.home__totalStats > h2 {
+    text-align: left;
+    font-size: 1.52rem;
+    font-weight: 600;
+    color: var(--c-primary);
+}
+
+.home__totalStats > h2 span {
+    color: var(--c-black);
+}
+
+.total__stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.2rem 0;
+}
+
+.stat {
+    max-width: 100%;
+    background-color: transparent;
+    padding: 0.8rem;
+    border: 1.2px solid var(--c-primaryTint);
+    box-shadow: -6px 6px 0 0 var(--c-primaryTint);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 4px;
+}
+
+.stat > p {
+    text-align: left;
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: var(--c-black);
+}
+
+.stat > h3 {
+    text-align: right;
+    font-size: 1.32rem;
+    font-weight: 600;
+    color: var(--c-primary);
+}

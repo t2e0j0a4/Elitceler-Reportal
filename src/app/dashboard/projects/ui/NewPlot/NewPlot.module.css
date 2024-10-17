@@ -1,0 +1,36 @@
+.form {
+    width: 100%;
+    padding: 1.2rem;
+    background-color: #fafafa;
+    border-radius: 4px;
+}
+
+.form > h2 {
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--c-black);
+}
+
+.form > h2 span {
+    color: var(--c-primary);
+}
+
+.form__main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    
+}
+
+.multi__fields {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}

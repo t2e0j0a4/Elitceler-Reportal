@@ -1,0 +1,193 @@
+.app__sidebar {
+    width: 270px;
+    max-width: 100%;
+    height: 100vh;
+    flex: 0 0 auto;
+    border-right: 1.2px solid var(--c-black);
+    background-color: var(--c-primary);
+}
+
+.sidebar__center {
+    width: 100%;
+    height: 100%;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.sidebar__logo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.sidebar__logo > h2 {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--c-white);
+}
+
+.sidebar__logo > h2 span {
+    color: var(--c-primaryShade);
+}
+
+.sidebar__logo > button {
+    background-color: var(--c-primary);
+    padding: 0.4rem;
+    border-radius: 6px;
+    font-size: 0.98rem;
+    color: var(--c-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    cursor: pointer;
+    border: 1.2px solid var(--c-white);
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease ;
+}
+
+.sidebar__logo > button:disabled {
+    background-color: var(--c-primary);
+    cursor: not-allowed;
+    border-color: var(--c-white);
+}
+
+.sidebar__menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0 0.2rem;
+    margin-top: 2rem;
+}
+
+.sidebar__menu a {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem;
+    text-decoration: none;
+    font-weight: 500;
+    outline: none;
+    background-color: transparent;
+    color: var(--c-white);
+    font-size: 1.08rem;
+    text-align: left;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar__menu a.active__link {
+    background-color: var(--c-white);
+    color: var(--c-primaryShade);
+}
+
+/* CSS Loader */
+
+.basic:before {
+    content: "";
+    display: block;
+    height: 16px;
+    width: 16px;
+    -webkit-animation: spin 0.5s infinite linear;
+    animation: spin 0.5s infinite linear;
+    border: 3px var(--c-white) solid;
+    border-left-color: transparent;
+    border-radius: 100%;
+}
+  
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+  
+/* CSS Loader */
+
+@media (pointer: fine) and (hover: hover) {
+    .sidebar__menu a:not(.active__link):is(:hover, :focus-visible) {
+        background-color: var(--c-white);
+        color: var(--c-primary);
+    }
+
+    .sidebar__logo > button:not(:disabled):is(:hover, :focus-visible) {
+        background-color: var(--c-primaryShade);
+        border-color: var(--c-primaryShade);
+    }
+}
+
+
+@media all and (max-width: 1024px) {
+    .sidebar__center {
+        padding: 0.8rem;
+    }
+}
+
+@media all and (max-width: 800px) {
+    .app__sidebar {
+        width: 100%;
+        height: 100%;
+        border-right: none;
+        border-bottom: 1.2px solid var(--c-primary);
+    }
+
+    .sidebar__center {
+        flex-direction: column;
+    }
+
+    .sidebar__menu {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.8rem;
+        overflow-x: scroll;
+        margin-top: 0;
+    }
+
+    .sidebar__menu::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+    .sidebar__menu a {
+        width: fit-content;
+        flex: 0 0 auto;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media all and (max-width: 580px) {
+    
+    .sidebar__menu a span {
+        display: none;
+    }
+
+    .sidebar__menu a {
+        width: 48px;
+        height: 48px;
+    }
+}

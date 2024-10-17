@@ -1,0 +1,134 @@
+.home__changingStats {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    margin: 2rem 0 1.2rem;
+    background-color: #fafafa;
+    border-radius: 4px;
+}
+
+.home__changingStats h2 {
+    text-align: left;
+    font-size: 1.52rem;
+    font-weight: 600;
+    color: var(--c-primary);
+}
+
+.home__changingStats h2 span {
+    color: var(--c-black);
+}
+
+.stats__head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.date__picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.date__picker > input {
+    padding: 0.32rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    border-radius: 4px;
+    transition: all 0.1s ease;
+    outline: none;
+    border: 0.2px solid var(--c-primary);
+    background-color: transparent;
+    color: var(--c-primary);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.date__picker > input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.date__picker > input:focus {
+    outline: 1px solid var(--c-primary);
+    background-color: var(--c-white);
+    box-shadow: 0 0 2px 2px #ec17173e;
+}
+
+.date__picker > button {
+    padding: 0.36rem;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    border: 1.2px solid var(--c-primary);
+    color: var(--c-primary);
+    background-color: transparent;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    outline: none;
+}
+
+.changing__stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0 1.2rem;
+}
+
+.stat {
+    max-width: 100%;
+    background-color: transparent;
+    padding: 0.8rem;
+    border: 1.2px solid var(--c-primaryShade);
+    box-shadow: -6px 6px 0 0 var(--c-primaryShade);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 4px;
+}
+
+.stat > p {
+    text-align: left;
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: var(--c-black);
+}
+
+.stat > h3 {
+    text-align: right;
+    font-size: 1.32rem;
+    font-weight: 600;
+    color: var(--c-primaryShade);
+}
+
+@media (hover:hover) and (pointer: fine) {
+    .date__picker > button:is(:hover, :focus-visible) {
+        background-color: var(--c-primary);
+        color: var(--c-white);
+    }
+}
+
+
+@media all and (max-width: 600px) {
+    .home__changingStats {
+        width: 100%;
+        padding: 0.4rem;
+    }
+}
+
+
+@media all and (max-width: 400px) {
+    .stats__head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date__picker, .date__picker > input {
+        width: 100%;
+    }
+}

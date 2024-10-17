@@ -1,0 +1,217 @@
+.register__form {
+  width: 50%;
+  height: 100%;
+  background-color: var(--c-white);
+  padding: 1rem 2rem;
+
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.form__center {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form__head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.form__head > p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--c-black);
+    text-align: right;
+}
+
+.form__head > p a {
+    text-align: right;
+    text-decoration: none;
+    margin-left: 0.2rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 2px;
+    color: var(--c-primary);
+    background-color: transparent;
+    border: 1px solid var(--c-primary);
+    transition: border 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+.form__head > p a:is(:hover, :focus-visible) {
+    background-color: var(--c-primary);
+    color: var(--c-white);
+}
+
+.form__center > h1,
+.form__head > h2 {
+  font-size: 1.6rem;
+  text-align: left;
+  font-style: normal;
+  line-height: normal;
+  color: var(--c-black);
+}
+
+.form__center > h1 span {
+  color: var(--c-primary);
+}
+
+.form__head > h2 {
+  font-size: 1.32rem;
+}
+
+.form__input {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.form__input label {
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+}
+
+.form__input input {
+  width: 100%;
+  padding: 0.52rem 0.9rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.98rem;
+  outline: none;
+  border: 1.2px solid var(--c-primaryTint);
+  color: var(--c-black);
+  -webkit-transition: color 0.3s ease, border 0.3s ease;
+  -o-transition: color 0.3s ease, border 0.3s ease;
+  transition: color 0.3s ease, border 0.3s ease;
+}
+
+.form__input input:focus {
+  border: 1.2px solid var(--c-primaryShade);
+  color: var(--c-primary);
+}
+
+.form__input input:focus::placeholder {
+  color: var(--c-primaryTint);
+}
+
+.form__center > button {
+  padding: 0.52rem 0.9rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  color: var(--c-white);
+  background-color: var(--c-primary);
+  border: 1.2px solid var(--c-primaryTint);
+  outline: none;
+  -webkit-transition: color 0.3s ease, background-color 0.3s ease;
+  -o-transition: color 0.3s ease, background-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  text-align: center;
+  margin-top: 0.8rem;
+  width: 100%;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+.form__center > button:disabled {
+  background-color: var(--c-primaryShade);
+  border-color: var(--c-primaryShade);
+  cursor: not-allowed;
+}
+
+.form__center > button:is(:focus-visible, :hover),
+.direct__dashboard > a:is(:hover, :focus-visible) {
+  background-color: var(--c-primaryShade);
+  color: var(--c-white);
+}
+
+/* CSS Loader */
+
+.basic:before {
+  content: "";
+  display: block;
+  height: 21px;
+  width: 21px;
+  -webkit-animation: spin 0.5s infinite linear;
+  animation: spin 0.5s infinite linear;
+  border: 3px var(--c-white) solid;
+  border-left-color: transparent;
+  border-radius: 100%;
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* CSS Loader */
+
+
+@media all and (max-width: 900px) {
+  .register__form {
+    width: 100%;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .register__form {
+    padding: 0.9rem;
+  }
+
+  .form__head > p {
+    font-size: 0.7rem;
+  }
+}

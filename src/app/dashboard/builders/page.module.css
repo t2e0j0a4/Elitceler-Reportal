@@ -1,0 +1,27 @@
+.dashboard__head {
+    width: 100%;
+}
+  
+.dashboard__head h1 {
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--c-mainText);
+}
+
+.builders__table {
+    width: 100%;
+    padding-bottom: 2.4rem;
+}
+  
+.builders__main {
+    width: 100%;
+    background-color: var(--c-white);
+    border-radius: 4px;
+}
+  
+.no__exist {
+    width: 100%;
+    padding: 1.2rem;
+    border-top: 1px solid #23232330;
+}
