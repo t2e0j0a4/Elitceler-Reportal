@@ -1,7 +1,7 @@
 'use client';
+import Link from 'next/link';
 import React, {useState} from 'react';
 import styles from "./LoginForm.module.css";
-import Link from 'next/link';
 
 const LoginForm = () => {
 

@@ -46,6 +46,7 @@ const FormSelect = ({
 
     return (
         <div className={styles.form__select} ref={selectRef}>
+            <p>{optionPlaceholder}</p>
             <div className={styles.select__top} role="button" tabIndex={0} onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                     setShowOptions(!showOptions);
@@ -53,7 +54,7 @@ const FormSelect = ({
             }} onClick={(e) => {
                 setShowOptions(!showOptions);
             }}>
-                <p>{selectedOption.name ? <span style={{ textTransform: 'capitalize' }}>{selectedOption.name}</span> : optionPlaceholder}</p>
+                <p>{selectedOption.name ? <span style={{ textTransform: 'capitalize' }}>{selectedOption.name}</span> : <span className={styles.placeholder__clr}>{optionPlaceholder}</span>}</p>
                 <FaAngleDown style={{ transform: `${showOptions ? 'rotate(-180deg)' : 'rotate(0deg)'}`, transition: 'transform 0.3s ease', color: 'var(--c-primaryShade)' }} />
             </div>
 

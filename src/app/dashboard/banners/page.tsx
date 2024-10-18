@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from "./page.module.css";
+import FileUploader from '@/components/FileUpload/FileUpload';
 
 const Banners = () => {
   return (
@@ -12,6 +13,11 @@ const Banners = () => {
       </div>
 
       {/* Head */}
+
+      {/* Main */}
+
+
+      {/* Main */}
 
     </>
   )

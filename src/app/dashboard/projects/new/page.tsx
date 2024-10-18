@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./page.module.css";
 
-// UI
+// UI & Components
+import NewPlot from '../ui/NewPlot/NewPlot';
+import NewVilla from '../ui/NewVilla/NewVilla';
 import FormSelect from '@/components/FormSelect/FormSelect';
+import NewAppartment from '../ui/NewAppartment/NewAppartment';
 
 // Data
 import { fetchedBuilders } from '@/data';
-import NewAppartment from '../ui/NewAppartment/NewAppartment';
-import NewPlot from '../ui/NewPlot/NewPlot';
-import NewVilla from '../ui/NewVilla/NewVilla';
 
 const NewProject = () => {
 

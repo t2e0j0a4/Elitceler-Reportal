@@ -8,21 +8,34 @@
   position: relative;
 }
 
+.form__select > p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--c-primaryShade);
+  text-align: left;
+}
+
+.placeholder__clr {
+  color: #232323A0;
+}
+
 .select__top {
   width: 100%;
-  padding: 0.36rem 0.7rem;
+  padding: 0.48rem 0.7rem;
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   background-color: transparent;
-  border: 1.2px solid var(--c-primaryShade);
+  border: 1.2px solid transparent;
+  box-shadow: 0 0 1px 0.8px #23232330;
+  transition: all 0.3s ease;
   outline: none;
 }
 
 .select__top p {
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   text-align: left;
   color: var(--c-primaryShade);
   font-weight: 400;
@@ -32,7 +45,7 @@
   width: 100%;
   max-width: 100%;
   position: absolute;
-  top: 42px;
+  top: 70px;
   height: 164px;
   background-color: var(--c-white);
   border: 1.2px solid var(--c-white);
@@ -45,6 +58,7 @@
   gap: 0.4rem;
   padding: 0.5rem;
   overflow-y: auto;
+  z-index: 10000;
   transition: all 0.28s ease;
 }
 
@@ -69,24 +83,24 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.28s linear;
-  color: var(--c-primary);
+  color: var(--c-black);
   text-transform: capitalize;
   outline: none;
 }
 
 .select__options p.selected__option {
-  background-color: var(--c-primaryShade);
+  background-color: var(--c-black);
   color: var(--c-white);
 }
 
 @media (hover: hover) and (pointer: fine) {
 
-  .select__top:focus-visible {
-    outline: 1.4px solid var(--c-primaryShade);
+  .select__top:is(:focus-within, :focus-visible) {
+    border-color: var(--c-primaryShade);
   }
 
   .select__options p:not(.selected__option):is(:hover, :focus-visible) {
-    background-color: var(--c-primaryTint);
-    color: var(--c-primaryShade);
+    background-color: #23232330;
+    color: var(--c-black);
   }
 }

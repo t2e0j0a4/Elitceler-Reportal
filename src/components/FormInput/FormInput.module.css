@@ -5,7 +5,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 0.5rem;
-    padding: 0.4rem;
+    padding: 0.4rem 0;
 }
 
 .form__input > label {
@@ -25,13 +25,16 @@
     gap: 0.5rem;
     background-color: transparent;
     border: 1.2px solid transparent;
+    box-shadow: 0 0 1px 0.8px #23232330;
+    transition: all 0.3s ease;
     outline: none;
     font-family: inherit;
     font-size: 0.8rem;
-    box-shadow: 0 0 1px 0.8px #23232330;
-    transition: all 0.3s ease;
 }
 
+.form__input > input::placeholder {
+    color: #232323A0;
+}
 
 .form__input > input[type=date] {
     text-transform: uppercase;
