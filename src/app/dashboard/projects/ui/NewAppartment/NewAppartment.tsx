@@ -9,6 +9,7 @@ import FileUpload from '@/components/FileUpload/FileUpload';
 
 // Types
 import { ApartmentDetails } from '@/types';
+import { IoClose } from 'react-icons/io5';
 
 const NewAppartment = () => {
 
@@ -204,9 +205,9 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
     // eslint-disable-next-line
   }, [selctedConstructionType]);
 
-  const [repoAmenitiesBasic, setRepoAmenitiesBasic] = useState('');
-  const [repoOutdoorAmenities, setRepoOutdoorAmenities] = useState('');
-  const [repoClubHouseAmenities, setRepoClubHouseAmenities] = useState('');
+  const [repoAmenitiesBasic, setRepoAmenitiesBasic] = useState(apartmentDetails.amenitiesBasic ? apartmentDetails.amenitiesBasic.join(',') : '');
+  const [repoOutdoorAmenities, setRepoOutdoorAmenities] = useState(apartmentDetails.outdoorAmenities ? apartmentDetails.outdoorAmenities.join(',') : '');
+  const [repoClubHouseAmenities, setRepoClubHouseAmenities] = useState(apartmentDetails.clubHouseAmenities ? apartmentDetails.clubHouseAmenities.join(',') : '');
 
   const changeAmenitiesValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRepoAmenitiesBasic(e.target.value);
@@ -220,11 +221,18 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
     setRepoOutdoorAmenities(e.target.value);
   }
 
+  const handleOptionSelect = (option: string, defaultArr: string[], changeArr: string, setChange: React.Dispatch<React.SetStateAction<string>>) => {
+    const newArr = defaultArr.filter((opt) => opt !== option);
+    setApartmentDetails({...apartmentDetails, [changeArr]: newArr});
+    setChange(newArr ? newArr.join(',') : '');
+    console.log(apartmentDetails.amenitiesBasic)
+  }
+
   useEffect(() => {
     
-    const amenitiesBasic = repoAmenitiesBasic?.split(',').map((value: string) => value.trim()); 
-    const outdoorAmenities = repoOutdoorAmenities?.split(',').map((value: string) => value.trim()); 
-    const clubHouseAmenities = repoClubHouseAmenities?.split(',').map((value: string) => value.trim()); 
+    const amenitiesBasic = repoAmenitiesBasic ? repoAmenitiesBasic.split(',').map((value: string) => value.trim()): []; 
+    const outdoorAmenities = repoOutdoorAmenities ? repoOutdoorAmenities.split(',').map((value: string) => value.trim()) : []; 
+    const clubHouseAmenities = repoClubHouseAmenities ? repoClubHouseAmenities.split(',').map((value: string) => value.trim()) : []; 
 
     setApartmentDetails({
       ...apartmentDetails, amenitiesBasic, outdoorAmenities, clubHouseAmenities
@@ -235,11 +243,48 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
 
   return (
     <>
-      <FormInput labelFor='amenitiesBasic' labelTitle='Amenities (comma seperated)' inputType='text' inputName='amenitiesBasic' placeholder='Ex: Gym, School, Garden' value={repoAmenitiesBasic} setValue={changeAmenitiesValue} />
-
-      <FormInput labelFor='clubHouseAmenities' labelTitle='Club House Amenities (comma seperated)' inputType='text' inputName='clubHouseAmenities' placeholder='Ex: Gym, Swimming pool' value={repoClubHouseAmenities} setValue={changeClubHouseAmenities} />
-
-      <FormInput labelFor='outdoorAmenities' labelTitle='Outdoor Amenities (comma seperated)' inputType='text' inputName='outdoorAmenities' placeholder='Ex: Park, Tennis court' value={repoOutdoorAmenities} setValue={changeOutdoorAmenities} />
+      <>
+        <FormInput labelFor='amenitiesBasic' labelTitle='Amenities (comma seperated)' inputType='text' inputName='amenitiesBasic' placeholder='Ex: Gym, School, Garden' value={repoAmenitiesBasic} setValue={changeAmenitiesValue} />
+        <div className={styles.all__options}>
+          {apartmentDetails.amenitiesBasic.map((option, index) => (
+            option ? (<span key={index}>
+              {option} 
+              <button type="button" title="Remove" onClick={() => {
+                handleOptionSelect(option, apartmentDetails.amenitiesBasic, 'amenitiesBasic', setRepoAmenitiesBasic);
+              }}><IoClose /></button>
+            </span>) : <></>
+          ))}
+        </div>
+      </>
+      
+      <>
+        <FormInput labelFor='clubHouseAmenities' labelTitle='Club House Amenities (comma seperated)' 
+        inputType='text' inputName='clubHouseAmenities' placeholder='Ex: Gym, Swimming pool' value={repoClubHouseAmenities} setValue={changeClubHouseAmenities} />
+        <div className={styles.all__options}>
+          {apartmentDetails.clubHouseAmenities.map((option, index) => (
+            option ? (<span key={index}>
+              {option} 
+              <button type="button" title="Remove" onClick={() => {
+                handleOptionSelect(option, apartmentDetails.clubHouseAmenities, 'clubHouseAmenities', setRepoClubHouseAmenities);
+              }}><IoClose /></button>
+            </span>) : <></>
+          ))}
+        </div>
+      </>
+      
+      <>
+        <FormInput labelFor='outdoorAmenities' labelTitle='Outdoor Amenities (comma seperated)' inputType='text' inputName='outdoorAmenities' placeholder='Ex: Park, Tennis court' value={repoOutdoorAmenities} setValue={changeOutdoorAmenities} />
+        <div className={styles.all__options}>
+          {apartmentDetails.outdoorAmenities.map((option, index) => (
+            option ? (<span key={index}>
+              {option} 
+              <button type="button" title="Remove" onClick={() => {
+                handleOptionSelect(option, apartmentDetails.outdoorAmenities, 'outdoorAmenities', setRepoOutdoorAmenities);
+              }}><IoClose /></button>
+            </span>) : <></>
+          ))}
+        </div>
+      </>
 
       <FormSelect options={constructionTypes} optionPlaceholder='Select construction type' selectedOption={selctedConstructionType} setSelectedOption={setSelctedConstructionType} />
       <FormInput labelFor='clubHouseSize' labelTitle='Club House Size' inputType='text' inputName='clubHouseSize' placeholder='Enter Club house size' value={apartmentDetails.clubHouseSize} setValue={changeApartmentDetails} />

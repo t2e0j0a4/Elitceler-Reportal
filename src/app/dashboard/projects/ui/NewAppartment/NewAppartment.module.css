@@ -49,6 +49,47 @@
     gap: 0.8rem;
 }
 
+.all__options {
+    width: 100%;
+    flex-grow: 0.8;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.all__options span {
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background-color: var(--c-primary);
+    border: 1px solid var(--c-primary);
+    color: var(--c-white);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    cursor: default;
+}
+
+.all__options span button {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    background-color: var(--c-white);
+    color: var(--c-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    overflow: none;
+    outline: none;
+    border-radius: 50%;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .page__changer {
     width: 100%;
     position: relative;
@@ -91,5 +132,10 @@
         background-color: var(--c-primaryShade);
         color: var(--c-white);
         border-color: var(--c-primaryShade);
+    }
+
+    .all__options span button:is(:hover, :focus-visible) {
+        background-color: var(--c-primaryShade);
+        color: var(--c-white);
     }
 }
