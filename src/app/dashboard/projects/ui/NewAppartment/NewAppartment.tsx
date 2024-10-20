@@ -7,49 +7,14 @@ import FormInput from '@/components/FormInput/FormInput';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import FileUpload from '@/components/FileUpload/FileUpload';
 
-type ApartmentDetails = {
-  projectName: string,
-  description: string,
-  projectType: string,
-  launchDate: string,
-  possessionDate: string,
-  basePrice: string,
-  totalArea: string,
-  projectSize: string,
-  floors: string,
-  flats: string,
-  flatsPerFloor: string,
-  towers: string,
-  projectLocation: string,
-  latitude: string,
-  longitude: string,
-
-  constructionType: string,
-  clubHouseSize: string,
-  totalOpenSpace: string,
-
-  siteMap: File[],
-  masterPlan: File[],
-  projectHighlights: File[],
-
-  elevationImages: File[],
-  amenities: File[],
-
-  floorPlan: File[],
-  videoLink: string,
-  brochure: File[],
-
-  reraId: string,
-  certificates: File[],
-  projectHighlightPoints: string
-}
+// Types
+import { ApartmentDetails } from '@/types';
 
 const NewAppartment = () => {
 
-
   const [pages, setPages] = useState<{
     currentPage: number;
-    totalPage: 7
+    totalPage: number
   }>({
     totalPage: 7,
     currentPage: 1
@@ -72,6 +37,9 @@ const NewAppartment = () => {
     latitude: '',
     longitude: '',
 
+    amenitiesBasic: [],
+    clubHouseAmenities: [],
+    outdoorAmenities: [],
     constructionType: '',
     clubHouseSize: '',
     totalOpenSpace: '',
@@ -87,6 +55,8 @@ const NewAppartment = () => {
     videoLink: '',
     brochure: [],
 
+    priceSheet : [],
+
     reraId: '',
     certificates: [],
     projectHighlightPoints: ''
@@ -99,8 +69,14 @@ const NewAppartment = () => {
   }
 
   return (
-    <form className={styles.form}>
-      <h2>Add <span>Appartment</span></h2>
+    <form className={styles.form} onSubmit={(e) => {
+      e.preventDefault();
+    }}>
+
+      <div className={styles.form__head}>
+        <h2>Add <span>Appartment</span></h2>
+        <span>Page {pages.currentPage}/{pages.totalPage}</span>
+      </div>
       
       <div className={styles.form__main}>
         {
@@ -115,7 +91,7 @@ const NewAppartment = () => {
           ) : pages.currentPage === 5 ? (
             <Page5 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} changeApartmentDetails={changeApartmentDetails} />
           ) : pages.currentPage === 6 ? (
-            <Page6/>
+            <Page6 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
           ) : pages.currentPage === 7 ? (
             <Page7 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} changeApartmentDetails={changeApartmentDetails} />
           ) : <></>
@@ -131,11 +107,11 @@ const NewAppartment = () => {
             })
           }}>Back</button>
         }
-        <button className={styles.next__changer} type='button' title='Next' aria-label='Next' onClick={() => {
-          setPages({
+        <button className={styles.next__changer} type={pages.currentPage === pages.totalPage ? 'submit' : 'button'} title={pages.currentPage === pages.totalPage ? 'Submit' : 'Next'} aria-label={pages.currentPage === pages.totalPage ? 'Submit' : 'Next'} onClick={() => {
+          pages.currentPage < pages.totalPage && (setPages({
             ...pages,
             currentPage: pages.currentPage + 1
-          })
+          }))
         }}>{pages.currentPage === pages.totalPage ? 'Submit' : 'Next'}</button>
       </div>
     </form>
@@ -228,8 +204,43 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
     // eslint-disable-next-line
   }, [selctedConstructionType]);
 
+  const [repoAmenitiesBasic, setRepoAmenitiesBasic] = useState('');
+  const [repoOutdoorAmenities, setRepoOutdoorAmenities] = useState('');
+  const [repoClubHouseAmenities, setRepoClubHouseAmenities] = useState('');
+
+  const changeAmenitiesValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepoAmenitiesBasic(e.target.value);
+  }
+
+  const changeClubHouseAmenities = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepoClubHouseAmenities(e.target.value);
+  }
+
+  const changeOutdoorAmenities = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepoOutdoorAmenities(e.target.value);
+  }
+
+  useEffect(() => {
+    
+    const amenitiesBasic = repoAmenitiesBasic?.split(',').map((value: string) => value.trim()); 
+    const outdoorAmenities = repoOutdoorAmenities?.split(',').map((value: string) => value.trim()); 
+    const clubHouseAmenities = repoClubHouseAmenities?.split(',').map((value: string) => value.trim()); 
+
+    setApartmentDetails({
+      ...apartmentDetails, amenitiesBasic, outdoorAmenities, clubHouseAmenities
+    });
+
+    // eslint-disable-next-line
+  }, [repoAmenitiesBasic, repoOutdoorAmenities, repoClubHouseAmenities]);
+
   return (
     <>
+      <FormInput labelFor='amenitiesBasic' labelTitle='Amenities (comma seperated)' inputType='text' inputName='amenitiesBasic' placeholder='Ex: Gym, School, Garden' value={repoAmenitiesBasic} setValue={changeAmenitiesValue} />
+
+      <FormInput labelFor='clubHouseAmenities' labelTitle='Club House Amenities (comma seperated)' inputType='text' inputName='clubHouseAmenities' placeholder='Ex: Gym, Swimming pool' value={repoClubHouseAmenities} setValue={changeClubHouseAmenities} />
+
+      <FormInput labelFor='outdoorAmenities' labelTitle='Outdoor Amenities (comma seperated)' inputType='text' inputName='outdoorAmenities' placeholder='Ex: Park, Tennis court' value={repoOutdoorAmenities} setValue={changeOutdoorAmenities} />
+
       <FormSelect options={constructionTypes} optionPlaceholder='Select project type' selectedOption={selctedConstructionType} setSelectedOption={setSelctedConstructionType} />
       <FormInput labelFor='clubHouseSize' labelTitle='Club House Size' inputType='text' inputName='clubHouseSize' placeholder='Enter Club house size' value={apartmentDetails.clubHouseSize} setValue={changeApartmentDetails} />
       <FormInput labelFor='totalOpenSpace' labelTitle='Total Open Space' inputType='text' inputName='totalOpenSpace' placeholder='Enter total open space' value={apartmentDetails.totalOpenSpace} setValue={changeApartmentDetails} />
@@ -300,9 +311,21 @@ const Page5 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
   )
 }
 
-const Page6 = () => {
+const Page6 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>}) => {
+
+  const [repoPriceSheet, setRepoPriceSheet] = useState<File[]>(apartmentDetails.priceSheet);
+
+  useEffect(() => {
+
+    setApartmentDetails({...apartmentDetails, priceSheet: repoPriceSheet });
+
+    // eslint-disable-next-line
+  }, [repoPriceSheet]);
+
   return (
-    <p>Page 6</p>
+    <>
+      <FileUpload labelFor='priceSheet' labelTitle='Price Sheet' files={repoPriceSheet} setFiles={setRepoPriceSheet} />
+    </>
   )
 }
 

@@ -5,15 +5,29 @@
     border-radius: 4px;
 }
 
-.form > h2 {
+.form__head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.form__head > h2 {
     text-align: left;
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--c-black);
 }
 
-.form > h2 span {
+.form__head > h2 span {
     color: var(--c-primary);
+}
+
+.form__head > span {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--c-primaryShade);
 }
 
 .form__main {

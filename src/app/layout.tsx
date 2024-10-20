@@ -23,8 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <NextTopLoader color="var(--primary)" height={4} crawl={true} showSpinner={false} easing="ease-in" />
-        <Toaster position="top-right" gutter={8} containerStyle={{ fontSize: '0.88rem' }} />
+        <NextTopLoader color="var(--c-primaryShade)" height={3.5} crawl={true} showSpinner={false} easing="ease-in" />        <Toaster position="top-right" gutter={8} containerStyle={{ fontSize: '0.88rem' }} />
         {children}
       </body>
     </html>
