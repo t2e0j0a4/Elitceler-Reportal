@@ -57,6 +57,13 @@
   background-color: var(--c-white);
 }
 
+.table__body td div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 .table__body td button {
   outline: none;
   padding: 0.3rem 0.5rem;

@@ -4,7 +4,11 @@ import React, { useEffect, useState } from 'react'
 
 // Types
 import { BuilderType } from '@/types'
+
+// React Icons
+import { LuCheck } from "react-icons/lu";
 import { FaRegEye } from "react-icons/fa6";
+import { RiCloseLine } from "react-icons/ri";
 
 // UI
 import BuilderDetails from "../BuilderDetails/BuilderDetails"; 
@@ -36,9 +40,10 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
               <th>S.No</th>
               <th>Name</th>
               <th>Contact Number</th>
-              <th>Email</th>
+              {builderType !== 'pending' && <th>Email</th>}
               <th>RERA Number</th>
               <th>Details</th>
+              {builderType === 'pending' && <th>Options</th>}
             </tr>
           </thead>
 
@@ -50,11 +55,21 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
                           <td>{index + 1}</td>
                           <td>{builder.name ? builder.name : '-'}</td>
                           <td>{builder.phoneNumber ? builder.phoneNumber : '-'}</td>
-                          <td>{builder.email ? builder.email : '-'}</td>
+                          {builderType !== 'pending' && <td>{builder.email ? builder.email : '-'}</td>}
                           <td>{builder.CompanyRERAnumber ? builder.CompanyRERAnumber : '-'}</td>
                           <td>
                             <div><button type='button' onClick  ={() => {setSelectedBuilderId(builder.id)}} title='More Details'><FaRegEye/><span>Details</span></button></div>
                           </td>
+                          {
+                            builderType === 'pending' && (
+                              <td>
+                                <div>
+                                  <button type='button' title='Accept'><LuCheck fontSize={15} /><span>Accept</span></button>
+                                  <button type='button' title='Reject'><RiCloseLine fontSize={15} /><span>Reject</span></button>
+                                </div>
+                              </td>
+                            )
+                          }
                       </tr>
                   )
               })
