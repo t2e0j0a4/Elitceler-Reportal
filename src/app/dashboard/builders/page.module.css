@@ -1,5 +1,9 @@
 .dashboard__head {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
 }
   
 .dashboard__head h1 {
@@ -7,6 +11,26 @@
     font-weight: 700;
     font-size: 1.8rem;
     color: var(--c-mainText);
+}
+
+.dashboard__head button {
+    flex: 0 0 auto;
+    text-decoration: none;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    text-align: center;
+    border-radius: 4px;
+    border: 1.2px solid var(--c-primary);
+    color: var(--c-primary);
+    background-color: transparent;
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    outline: none;
 }
 
 .builders__table {
@@ -24,4 +48,11 @@
     width: 100%;
     padding: 1.2rem;
     border-top: 1px solid #23232330;
+}
+
+@media (hover:hover) and (pointer: fine) {
+    .dashboard__head button:is(:hover, :focus-visible) {
+        background-color: var(--c-primary);
+        color: var(--c-white);
+    }
 }

@@ -25,6 +25,7 @@
     gap: 0.4rem;
     text-align: center;
     border-radius: 4px;
+    font-family: inherit;
     border: 1.2px solid var(--c-primary);
     color: var(--c-primary);
     background-color: transparent;

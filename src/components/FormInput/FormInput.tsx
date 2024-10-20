@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "./FormInput.module.css";
 
-const FormInput = ({labelFor, labelTitle, inputName, placeholder, inputType, value, setValue}: {labelFor: string, labelTitle: string, inputName: string, placeholder: string, inputType: 'text' | 'date' | 'number' | 'email', value: string, setValue: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+const FormInput = ({labelFor, labelTitle, inputName, placeholder, inputType, value, setValue}: {labelFor: string, labelTitle: string, inputName: string, placeholder: string, inputType: 'text' | 'date' | 'number' | 'email' | 'password', value: string, setValue: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
   return (
     <div className={styles.form__input}>
         <label htmlFor={labelFor}>{labelTitle}</label>

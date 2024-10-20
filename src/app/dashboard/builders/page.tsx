@@ -5,8 +5,10 @@ import styles from "./page.module.css";
 import { fetchedBuilders } from '@/data';
 
 // UI
+import AddBuilder from './ui/AddBuilder/AddBuilder';
 import BuilderToggle from './ui/BuilderToggle/BuilderToggle';
 import BuildersTable from './ui/BuildersTable/BuildersTable';
+
 
 const Builders = ({searchParams}: { searchParams: { builder: 'approved' | 'pending' | 'rejected' }}) => {
 
@@ -19,6 +21,7 @@ const Builders = ({searchParams}: { searchParams: { builder: 'approved' | 'pendi
 
       <div className={styles.dashboard__head}>
         <h1>Builders</h1>
+        <AddBuilder/>
       </div>
 
       {/* Head */}
