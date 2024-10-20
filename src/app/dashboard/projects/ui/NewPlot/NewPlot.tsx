@@ -114,7 +114,7 @@ const Page1 = ({plotDetails, setPlotDetails, changePlotDetails}: {plotDetails: P
     name: string
   }>({
       id: '',
-      name: ''
+      name: plotDetails.plotFacing
   })
 
   const [selectedPlotType, setSelectedPlotType] = useState<{
@@ -122,7 +122,7 @@ const Page1 = ({plotDetails, setPlotDetails, changePlotDetails}: {plotDetails: P
     name: string
   }>({
       id: '',
-      name: ''
+      name: plotDetails.plotType
   })
 
   useEffect(() => {
@@ -150,7 +150,7 @@ const Page1 = ({plotDetails, setPlotDetails, changePlotDetails}: {plotDetails: P
       </div>
       <div className={styles.multi__fields}>
         <FormInput labelFor='plotSizes' labelTitle='Plot Sizes' inputType='text' inputName='plotSizes' placeholder='Ex: 1250' value= {plotDetails.plotSizes} setValue={changePlotDetails} />
-        <FormSelect options={plotFacingOptions} optionPlaceholder='Plot Types' selectedOption={selectedPlotFacing} setSelectedOption={setSelectedPlotFacing} />
+        <FormSelect options={plotFacingOptions} optionPlaceholder='Plot Facing' selectedOption={selectedPlotFacing} setSelectedOption={setSelectedPlotFacing} />
       </div>
       <FormInput labelFor='reraId' labelTitle='RERA ID' inputType='text' inputName='reraId' placeholder='Ex: AB12121442' value={plotDetails.reraId} setValue={changePlotDetails} />
       <FormInput labelFor='pricePerSqYard' labelTitle='Price/Sq.Yard' inputType='text' inputName='pricePerSqYard' placeholder='Ex: 10000' value={plotDetails.pricePerSqYard} setValue={changePlotDetails} />

@@ -128,7 +128,7 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
     name: string
   }>({
       id: '',
-      name: ''
+      name: villaDetails.villaFacing
   })
 
   const [selectedVillaType, setSelectedVillaType] = useState<{
@@ -136,7 +136,7 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
     name: string
   }>({
       id: '',
-      name: ''
+      name: villaDetails.villaType
   })
 
   const [selectedBHKType, setSelectedBHKType] = useState<{
@@ -144,7 +144,7 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
     name: string
   }>({
       id: '',
-      name: ''
+      name: villaDetails.bhkType
   })
 
   useEffect(() => {

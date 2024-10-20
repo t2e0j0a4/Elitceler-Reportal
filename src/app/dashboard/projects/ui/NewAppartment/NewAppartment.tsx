@@ -133,7 +133,7 @@ const Page1 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
     name: string
   }>({
       id: '',
-      name: ''
+      name: apartmentDetails.projectType
   })
 
   useEffect(() => {
@@ -192,7 +192,7 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
     name: string
   }>({
       id: '',
-      name: ''
+      name: apartmentDetails.constructionType
   })
 
   useEffect(() => {
@@ -241,7 +241,7 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
 
       <FormInput labelFor='outdoorAmenities' labelTitle='Outdoor Amenities (comma seperated)' inputType='text' inputName='outdoorAmenities' placeholder='Ex: Park, Tennis court' value={repoOutdoorAmenities} setValue={changeOutdoorAmenities} />
 
-      <FormSelect options={constructionTypes} optionPlaceholder='Select project type' selectedOption={selctedConstructionType} setSelectedOption={setSelctedConstructionType} />
+      <FormSelect options={constructionTypes} optionPlaceholder='Select construction type' selectedOption={selctedConstructionType} setSelectedOption={setSelctedConstructionType} />
       <FormInput labelFor='clubHouseSize' labelTitle='Club House Size' inputType='text' inputName='clubHouseSize' placeholder='Enter Club house size' value={apartmentDetails.clubHouseSize} setValue={changeApartmentDetails} />
       <FormInput labelFor='totalOpenSpace' labelTitle='Total Open Space' inputType='text' inputName='totalOpenSpace' placeholder='Enter total open space' value={apartmentDetails.totalOpenSpace} setValue={changeApartmentDetails} />
     </>
