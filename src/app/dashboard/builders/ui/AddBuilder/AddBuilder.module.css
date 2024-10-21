@@ -81,6 +81,36 @@
     font-family: inherit;
 }
 
+/* CSS Loader */
+
+.basic:before {
+    content: "";
+    display: block;
+    height: 21px;
+    width: 21px;
+    -webkit-animation: spin 0.5s infinite linear;
+    animation: spin 0.5s infinite linear;
+    border: 3px var(--c-white) solid;
+    border-left-color: transparent;
+    border-radius: 100%;
+  }
+  
+  @-webkit-keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* CSS Loader */
+
 @media (pointer: fine) and (hover: hover) {
     .details__head button:is(:hover, :focus-visible) {
         background-color: var(--c-primaryShade);

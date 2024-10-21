@@ -5,14 +5,14 @@ import styles from "./layout.module.css";
 import Sidebar from '@/components/Sidebar/Sidebar';
 
 // NEXT
-// import { cookies } from 'next/headers';
-// import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const AdminLayout = ({children}: {children: React.ReactNode}) => {
 
-//   if (!cookies().has('__auth__token')) {
-//     redirect('/');
-//   }
+  if (!cookies().has('reportal__auth__token')) {
+    redirect('/');
+  }
 
   return (
     <main className={styles.app__layout}>

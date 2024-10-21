@@ -66,26 +66,26 @@ export type VillaDetails = {
   villaLocation: string;
   villaSize: string;
   villaFacing: string;
-  basePrice: string;
+  basePricePerSqft: string;
   launchDate: string;
   possessionDate: string
-  bhkType: string;
-  villaType: string;
-  villaSizeStart: string;
-  villaSizeEnd: string;
-  plotSizeStart: string;
-  plotSizeEnd: string;
-  priceRangeStart: string;
-  priceRangeEnd: string;
+  villasConfiguration: string;
+  villasType: string;
+  villaSizeStarting: string;
+  villaSizeEnding: string;
+  plotSizeStarting: string;
+  plotSizeEnding: string;
+  priceRangeStarting: string;
+  priceRangeEnding: string;
   clubHouseSize: string;
   additionalProvision: string;
-  reraId: string;
+  reraID: string;
 
   siteMap: File[];
   masterPlan: File[];
 
-  amenities: File[];
-  projectHighlightPoints: string;
+  amenitiesImages: File[];
+  projectHighlightsPoints: string;
 };
 
 export type PlotDetails = {
@@ -97,9 +97,9 @@ export type PlotDetails = {
   totalPlots: string;
   plotSizes: string;
   plotFacing: string;
-  reraId: string;
+  reraID: string;
   pricePerSqYard: string;
-  priceStartFrom: string;
+  priceStartsFrom: string;
   amenities: string;
 
   siteMap: File[];
@@ -107,5 +107,14 @@ export type PlotDetails = {
 
   amenitiesImages: File[];
   plotImages: File[];
-  projectHighlightPoints: string;
+  projectHighlightsPoints: string;
 };
+
+export type BuildersDataType = {
+  approvedBuildersLength: number;
+  pendingBuildersLength: number;
+  rejectedBuildersLength: number;
+  approvedBuilders: BuilderType[];
+  pendingBuilders: BuilderType[];
+  rejectedBuilders: BuilderType[];
+}

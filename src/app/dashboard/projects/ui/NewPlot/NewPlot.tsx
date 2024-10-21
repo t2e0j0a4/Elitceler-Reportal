@@ -1,5 +1,6 @@
 "use client";
 import styles from "./NewPlot.module.css";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from 'react';
 
 // Types
@@ -10,7 +11,13 @@ import FormInput from '@/components/FormInput/FormInput';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import FileUpload from '@/components/FileUpload/FileUpload';
 
-const NewPlot = () => {
+// Utils
+import createToast from "@/utils/createToast";
+
+// Actions
+import { addNewPlot } from "@/actions/projects";
+
+const NewPlot = ({builderId}: {builderId: string}) => {
 
   const [pages, setPages] = useState<{
     currentPage: number;
@@ -29,9 +36,9 @@ const NewPlot = () => {
     totalPlots: '',
     plotSizes: '',
     plotFacing: '',
-    reraId: '',
+    reraID: '',
     pricePerSqYard: '',
-    priceStartFrom: '',
+    priceStartsFrom: '',
     amenities: '',
 
     siteMap: [],
@@ -39,7 +46,7 @@ const NewPlot = () => {
 
     amenitiesImages: [],
     plotImages: [],
-    projectHighlightPoints: ''
+    projectHighlightsPoints: ''
   });
 
   const changePlotDetails = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,9 +55,73 @@ const NewPlot = () => {
     })
   }
 
+  const [responseLoading, setResponseLoading] = useState(false);
+
+  const router = useRouter();
+  
   return (
-    <form className={styles.form} onSubmit={(e) => {
+    <form className={styles.form} onSubmit={async (e) => {
       e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('plotName', plotDetails.plotName);
+      formData.append('plotLocation', plotDetails.plotLocation);
+      formData.append('plotLayoutSize', plotDetails.plotLayoutSize);
+      formData.append('plotType', plotDetails.plotType);
+      formData.append('approvals', plotDetails.approvals);
+      formData.append('totalPlots', plotDetails.totalPlots);
+      formData.append('plotSizes', plotDetails.plotSizes);
+      formData.append('plotFacing', plotDetails.plotFacing);
+      formData.append('reraID', plotDetails.reraID);
+      formData.append('pricePerSqYard', plotDetails.pricePerSqYard);
+      formData.append('priceStartsFrom', plotDetails.priceStartsFrom);
+      formData.append('amenities', plotDetails.amenities);
+      formData.append('projectHighlightsPoints', plotDetails.projectHighlightsPoints);
+
+      if (plotDetails.siteMap) {
+        plotDetails.siteMap.forEach((file) => {
+          formData.append('siteMap', file);
+        })
+      } else {
+        formData.append('siteMap', '');
+      }
+
+      if (plotDetails.masterPlan) {
+        plotDetails.masterPlan.forEach((file) => {
+          formData.append('masterPlan', file);
+        })
+      } else {
+        formData.append('masterPlan', '');
+      }
+
+      if (plotDetails.amenitiesImages) {
+        plotDetails.amenitiesImages.forEach((file) => {
+          formData.append('amenitiesImages', file);
+        })
+      } else {
+        formData.append('amenitiesImages', '');
+      }
+
+      if (plotDetails.plotImages) {
+        plotDetails.plotImages.forEach((file) => {
+          formData.append('plotImages', file);
+        })
+      } else {
+        formData.append('plotImages', '');
+      }
+
+      setResponseLoading(true);
+      const toastId = createToast('loading', 'Adding plot project...');
+      const plotAddResponse = await addNewPlot(formData, builderId);
+
+      (plotAddResponse.status === 'success') ? (
+        createToast('success', plotAddResponse.message, toastId),
+        router.refresh()
+      ) : (
+        createToast('error', plotAddResponse.message, toastId),
+        setResponseLoading(false)
+      )
+
     }}>
 
       <div className={styles.form__head}>
@@ -65,7 +136,7 @@ const NewPlot = () => {
           ) : pages.currentPage === 2 ? (
             <Page2 plotDetails={plotDetails} setPlotDetails={setPlotDetails} />
           ) : pages.currentPage === 3 ? (
-            <Page3 plotDetails={plotDetails} setPlotDetails={setPlotDetails} changePlotDetails={changePlotDetails} />
+            <Page3 plotDetails={plotDetails} setPlotDetails={setPlotDetails} />
           ) : <></>
         }
       </div>
@@ -79,12 +150,16 @@ const NewPlot = () => {
             })
           }}>Back</button>
         }
-        <button className={styles.next__changer} type={pages.currentPage === pages.totalPage ? 'submit' : 'button'} title={pages.currentPage === pages.totalPage ? 'Submit' : 'Next'} aria-label={pages.currentPage === pages.totalPage ? 'Submit' : 'Next'} onClick={() => {
-          pages.currentPage < pages.totalPage && (setPages({
+
+        {pages.currentPage < pages.totalPage && <button className={styles.next__changer} type="button" title="Next" aria-label="Next" onClick={() => {
+          (pages.currentPage < pages.totalPage && pages.currentPage !== pages.totalPage) && (setPages({
             ...pages,
             currentPage: pages.currentPage + 1
-          }))
-        }}>{pages.currentPage === pages.totalPage ? 'Submit' : 'Next'}</button>
+          }))}}>Next
+        </button>}
+        {pages.currentPage === pages.totalPage && <button type="submit" className={styles.next__changer} aria-label="Submit" title="Submit">{responseLoading ? (
+          <div className={styles.basic}></div>
+        ) : 'Submit'}</button>}
       </div>
 
     </form>
@@ -152,10 +227,11 @@ const Page1 = ({plotDetails, setPlotDetails, changePlotDetails}: {plotDetails: P
         <FormInput labelFor='plotSizes' labelTitle='Plot Sizes' inputType='text' inputName='plotSizes' placeholder='Ex: 1250' value= {plotDetails.plotSizes} setValue={changePlotDetails} />
         <FormSelect options={plotFacingOptions} optionPlaceholder='Plot Facing' selectedOption={selectedPlotFacing} setSelectedOption={setSelectedPlotFacing} />
       </div>
-      <FormInput labelFor='reraId' labelTitle='RERA ID' inputType='text' inputName='reraId' placeholder='Ex: AB12121442' value={plotDetails.reraId} setValue={changePlotDetails} />
+      <FormInput labelFor='reraID' labelTitle='RERA ID' inputType='text' inputName='reraID' placeholder='Ex: AB12121442' value={plotDetails.reraID} setValue={changePlotDetails} />
       <FormInput labelFor='pricePerSqYard' labelTitle='Price/Sq.Yard' inputType='text' inputName='pricePerSqYard' placeholder='Ex: 10000' value={plotDetails.pricePerSqYard} setValue={changePlotDetails} />
-      <FormInput labelFor='priceStartFrom' labelTitle='Price starts from' inputType='text' inputName='priceStartFrom' placeholder='Ex: 5000' value={plotDetails.priceStartFrom} setValue={changePlotDetails} />
-      <FormInput labelFor='amenities' labelTitle='Amenities' inputType='text' inputName='amenities' placeholder='Amenities' value={plotDetails.amenities} setValue={changePlotDetails} />
+      <FormInput labelFor='priceStartsFrom' labelTitle='Price starts from' inputType='text' inputName='priceStartsFrom' placeholder='Ex: 5000' value={plotDetails.priceStartsFrom} setValue={changePlotDetails} />
+      <FormInput labelFor='amenities' labelTitle='Amenities' inputType='text' inputName='amenities' placeholder='Ex: Gym, Sports' value={plotDetails.amenities} setValue={changePlotDetails} />
+      <FormInput labelFor='projectHighlightsPoints' labelTitle='Project Highlight Points' inputType='text' inputName='projectHighlightsPoints' placeholder='Project Highlight Points' value={plotDetails.projectHighlightsPoints} setValue={changePlotDetails} />
     </>
   )
 }
@@ -180,14 +256,14 @@ const Page2 = ({plotDetails, setPlotDetails}: {plotDetails: PlotDetails, setPlot
   )
 }
 
-const Page3 = ({plotDetails, setPlotDetails, changePlotDetails}: {plotDetails: PlotDetails, setPlotDetails: React.Dispatch<React.SetStateAction<PlotDetails>>, changePlotDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+const Page3 = ({plotDetails, setPlotDetails}: {plotDetails: PlotDetails, setPlotDetails: React.Dispatch<React.SetStateAction<PlotDetails>> }) => {
 
   const [repoAmenitiesImages, setRepoAmenitiesImages] = useState<File[]>(plotDetails.amenitiesImages);
   const [repoPlotImages, setRepoPlotImages] = useState<File[]>(plotDetails.plotImages);
 
   useEffect(() => {
 
-    setPlotDetails({...plotDetails, plotImages: repoPlotImages, amenitiesImages: repoAmenitiesImages});
+    setPlotDetails({...plotDetails, plotImages: repoPlotImages, amenitiesImages: repoAmenitiesImages });
 
     // eslint-disable-next-line
   }, [repoPlotImages, repoAmenitiesImages]);
@@ -196,7 +272,6 @@ const Page3 = ({plotDetails, setPlotDetails, changePlotDetails}: {plotDetails: P
     <>
       <FileUpload labelFor='amenitiesImages' labelTitle='Amenities Images' files={repoAmenitiesImages} setFiles={setRepoAmenitiesImages} />
       <FileUpload labelFor='plotImages' labelTitle='Plot Images' files={repoPlotImages} setFiles={setRepoPlotImages} />
-      <FormInput labelFor='projectHighlightPoints' labelTitle='Project Highlight Points' inputType='text' inputName='projectHighlightPoints' placeholder='Project Highlight Points' value={plotDetails.projectHighlightPoints} setValue={changePlotDetails} />
     </>
   )
 }

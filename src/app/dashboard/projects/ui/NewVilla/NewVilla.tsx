@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react'
 import styles from "./NewVilla.module.css";
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react'
 
 // Types
 import { VillaDetails } from '@/types';
@@ -10,7 +11,13 @@ import FormInput from '@/components/FormInput/FormInput';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import FileUpload from '@/components/FileUpload/FileUpload';
 
-const NewVilla = () => {
+// Utils
+import createToast from '@/utils/createToast';
+
+// Actions
+import { addNewVilla } from '@/actions/projects';
+
+const NewVilla = ({builderId}: {builderId: string}) => {
 
   const [pages, setPages] = useState<{
     currentPage: number;
@@ -25,26 +32,26 @@ const NewVilla = () => {
     villaLocation: '',
     villaSize: '',
     villaFacing: '',
-    basePrice: '',
+    basePricePerSqft: '',
     launchDate: '',
     possessionDate: '',
-    bhkType: '',
-    villaType: '',
-    villaSizeStart: '',
-    villaSizeEnd: '',
-    plotSizeStart: '',
-    plotSizeEnd: '',
-    priceRangeStart: '',
-    priceRangeEnd: '',
+    villasConfiguration: '',
+    villasType: '',
+    villaSizeStarting: '',
+    villaSizeEnding: '',
+    plotSizeStarting: '',
+    plotSizeEnding: '',
+    priceRangeStarting: '',
+    priceRangeEnding: '',
     clubHouseSize: '',
     additionalProvision: '',
-    reraId: '',
+    reraID: '',
 
     siteMap: [],
     masterPlan: [],
 
-    amenities: [],
-    projectHighlightPoints: ''
+    amenitiesImages: [],
+    projectHighlightsPoints: ''
   });
 
   const changeVillaDetails = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,9 +60,77 @@ const NewVilla = () => {
     })
   }
 
+  const [responseLoading, setResponseLoading] = useState(false);
+
+  const router = useRouter();
+
   return (
-    <form className={styles.form} onSubmit={(e) => {
+    <form className={styles.form} onSubmit={async (e) => {
       e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('villaName', villaDetails.villaName);
+      formData.append('villaLocation', villaDetails.villaLocation);
+      formData.append('villaSize', villaDetails.villaSize);
+      formData.append('villaFacing', villaDetails.villaFacing);
+      formData.append('basePricePerSqft', villaDetails.basePricePerSqft);
+      formData.append('launchDate', new Date(villaDetails.launchDate).toISOString());
+      formData.append('possessionDate', new Date(villaDetails.possessionDate).toISOString());
+      formData.append('villasConfiguration', villaDetails.villasConfiguration);
+      formData.append('villaSizeStarting', villaDetails.villaSizeStarting);
+      formData.append('villaSizeEnding', villaDetails.villaSizeEnding);
+      formData.append('plotSizeStarting', villaDetails.plotSizeStarting);
+      formData.append('plotSizeEnding', villaDetails.plotSizeEnding);
+      formData.append('priceRangeStarting', villaDetails.priceRangeStarting);
+      formData.append('priceRangeEnding', villaDetails.priceRangeEnding);
+      formData.append('clubHouseSize', villaDetails.clubHouseSize);
+      formData.append('additionalProvision', villaDetails.additionalProvision);
+      formData.append('reraID', villaDetails.reraID);
+      formData.append('projectHighlightsPoints', villaDetails.projectHighlightsPoints);
+      formData.append('noOfVilla', '00');
+      
+      formData.append('elevationImages', villaDetails.siteMap[0]);
+
+      if (villaDetails.siteMap) {
+        villaDetails.siteMap.forEach((file) => {
+          formData.append('siteMap', file);
+        })
+      } else {
+        formData.append('siteMap', '');
+      }
+
+      if (villaDetails.masterPlan) {
+        villaDetails.masterPlan.forEach((file) => {
+          formData.append('masterPlan', file);
+        })
+      } else {
+        formData.append('masterPlan', '');
+      }
+
+      if (villaDetails.amenitiesImages) {
+        villaDetails.amenitiesImages.forEach((file) => {
+          formData.append('amenitiesImages', file);
+        })
+      } else {
+        formData.append('amenitiesImages', '');
+      }
+
+      setResponseLoading(true);
+      const toastId = createToast('loading', 'Adding villa project...');
+      const villaAddResponse = await addNewVilla(formData, builderId);
+
+      console.log(villaAddResponse);
+
+      (villaAddResponse.status === 'success') ? (
+        createToast('success', villaAddResponse.message, toastId),
+        setResponseLoading(false),
+        router.refresh()
+      ) : (
+        createToast('error', villaAddResponse.message, toastId),
+        setResponseLoading(false)
+      )
+
+
     }}>
 
       <div className={styles.form__head}>
@@ -70,7 +145,7 @@ const NewVilla = () => {
           ) : pages.currentPage === 2 ? (
             <Page2 villaDetails={villaDetails} setVillaDetails={setVillaDetails} />
           ) : pages.currentPage === 3 ? (
-            <Page3 villaDetails={villaDetails} setVillaDetails={setVillaDetails} changeVillaDetails={changeVillaDetails} />
+            <Page3 villaDetails={villaDetails} setVillaDetails={setVillaDetails} />
           ) : <></>
         }
       </div>
@@ -84,12 +159,15 @@ const NewVilla = () => {
             })
           }}>Back</button>
         }
-        <button className={styles.next__changer} type={pages.currentPage === pages.totalPage ? 'submit' : 'button'} title={pages.currentPage === pages.totalPage ? 'Submit' : 'Next'} aria-label={pages.currentPage === pages.totalPage ? 'Submit' : 'Next'} onClick={() => {
-          pages.currentPage < pages.totalPage && (setPages({
+        {pages.currentPage < pages.totalPage && <button className={styles.next__changer} type="button" title="Next" aria-label="Next" onClick={() => {
+          (pages.currentPage < pages.totalPage && pages.currentPage !== pages.totalPage) && (setPages({
             ...pages,
             currentPage: pages.currentPage + 1
-          }))
-        }}>{pages.currentPage === pages.totalPage ? 'Submit' : 'Next'}</button>
+          }))}}>Next
+        </button>}
+        {pages.currentPage === pages.totalPage && <button type="submit" className={styles.next__changer} aria-label="Submit" title="Submit">{responseLoading ? (
+          <div className={styles.basic}></div>
+        ) : 'Submit'}</button>}
       </div>
 
     </form>
@@ -136,7 +214,7 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
     name: string
   }>({
       id: '',
-      name: villaDetails.villaType
+      name: villaDetails.villasType
   })
 
   const [selectedBHKType, setSelectedBHKType] = useState<{
@@ -144,7 +222,7 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
     name: string
   }>({
       id: '',
-      name: villaDetails.bhkType
+      name: villaDetails.villasConfiguration
   })
 
   useEffect(() => {
@@ -154,11 +232,11 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
     }
 
     if (selectedBHKType.id && selectedBHKType.name) {
-      setVillaDetails({...villaDetails, bhkType: selectedBHKType.name})
+      setVillaDetails({...villaDetails, villasConfiguration: selectedBHKType.name})
     }
 
     if (selectedVillaType.id && selectedVillaType.name) {
-      setVillaDetails({...villaDetails, villaType: selectedVillaType.name})
+      setVillaDetails({...villaDetails, villasType: selectedVillaType.name})
     }
 
     // eslint-disable-next-line
@@ -171,11 +249,11 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
       <FormInput labelFor='villaSize' labelTitle='Villa Size' inputType='text' inputName='villaSize' placeholder='Ex: 100 Acres' value={villaDetails.villaSize} setValue={changeVillaDetails} />
       <div className={styles.multi__fields}>
         <FormSelect options={villaFacingOptions} optionPlaceholder='Villa Facing' selectedOption={selectedVillaFacing} setSelectedOption={setSlectedVillaFacing} />
-        <FormInput labelFor='basePrice' labelTitle='Base Price (per sq.ft)' inputType='text' inputName='basePrice' placeholder='1000' value={villaDetails.basePrice} setValue={changeVillaDetails} />
+        <FormInput labelFor='basePricePerSqft' labelTitle='Base Price (per sq.ft)' inputType='text' inputName='basePricePerSqft' placeholder='1000' value={villaDetails.basePricePerSqft} setValue={changeVillaDetails} />
       </div>
       <div className={styles.multi__fields}>
         <FormSelect options={villaTypeOptions} optionPlaceholder='Villa Type' selectedOption={selectedVillaType} setSelectedOption={setSelectedVillaType} />
-        <FormSelect options={bhkTypeOptions} optionPlaceholder='BHK Type' selectedOption={selectedBHKType} setSelectedOption={setSelectedBHKType} />
+        <FormSelect options={bhkTypeOptions} optionPlaceholder='Villa BHKs' selectedOption={selectedBHKType} setSelectedOption={setSelectedBHKType} />
       </div>
       <div className={styles.multi__fields}>
         <FormInput labelFor='launchDate' labelTitle='Launch Date' inputType='date' inputName='launchDate' placeholder='Launch Date' value={villaDetails.launchDate} setValue={changeVillaDetails} />
@@ -183,23 +261,24 @@ const Page1 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetail
       </div>
 
       <div className={styles.multi__fields}>
-        <FormInput labelFor='villaSizeStart' labelTitle='Villa Size start from (sq.ft)' inputType='text' inputName='villaSizeStart' placeholder='Ex: 2000' value={villaDetails.villaSizeStart} setValue={changeVillaDetails} />
-        <FormInput labelFor='villaSizeEnd' labelTitle='Villa Size ends at (sq.ft)' inputType='text' inputName='villaSizeEnd' placeholder='Ex: 5500' value={villaDetails.villaSizeEnd} setValue={changeVillaDetails} />
+        <FormInput labelFor='villaSizeStarting' labelTitle='Villa Size start from (sq.ft)' inputType='text' inputName='villaSizeStarting' placeholder='Ex: 2000' value={villaDetails.villaSizeStarting} setValue={changeVillaDetails} />
+        <FormInput labelFor='villaSizeEnding' labelTitle='Villa Size ends at (sq.ft)' inputType='text' inputName='villaSizeEnding' placeholder='Ex: 5500' value={villaDetails.villaSizeEnding} setValue={changeVillaDetails} />
       </div>
 
       <div className={styles.multi__fields}>
-        <FormInput labelFor='plotSizeStart' labelTitle='Plot Size starts from (Sq Yards)' inputType='text' inputName='plotSizeStart' placeholder='Ex: 300' value={villaDetails.plotSizeStart} setValue={changeVillaDetails} />
-        <FormInput labelFor='plotSizeEnd' labelTitle='Plot Size ends at (Sq Yards)' inputType='text' inputName='plotSizeEnd' placeholder='Ex: 600' value={villaDetails.plotSizeEnd} setValue={changeVillaDetails} />
+        <FormInput labelFor='plotSizeStarting' labelTitle='Plot Size starts from (Sq Yards)' inputType='text' inputName='plotSizeStarting' placeholder='Ex: 300' value={villaDetails.plotSizeStarting} setValue={changeVillaDetails} />
+        <FormInput labelFor='plotSizeEnding' labelTitle='Plot Size ends at (Sq Yards)' inputType='text' inputName='plotSizeEnding' placeholder='Ex: 600' value={villaDetails.plotSizeEnding} setValue={changeVillaDetails} />
       </div>
 
       <div className={styles.multi__fields}>
-        <FormInput labelFor='priceRangeStart' labelTitle='Price Range starts from (Cr)' inputType='text' inputName='priceRangeStart' placeholder='Ex: 4.5' value={villaDetails.priceRangeStart} setValue={changeVillaDetails} />
-        <FormInput labelFor='priceRangeEnd' labelTitle='Price Range ends at (Cr)' inputType='text' inputName='priceRangeEnd' placeholder='Ex: 7.2' value={villaDetails.priceRangeEnd} setValue={changeVillaDetails} />
+        <FormInput labelFor='priceRangeStarting' labelTitle='Price Range starts from (Cr)' inputType='text' inputName='priceRangeStarting' placeholder='Ex: 4.5' value={villaDetails.priceRangeStarting} setValue={changeVillaDetails} />
+        <FormInput labelFor='priceRangeEnding' labelTitle='Price Range ends at (Cr)' inputType='text' inputName='priceRangeEnding' placeholder='Ex: 7.2' value={villaDetails.priceRangeEnding} setValue={changeVillaDetails} />
       </div>
 
       <FormInput labelFor='clubHouseSize' labelTitle='Club House Size (sq.ft)' inputType='text' inputName='clubHouseSize' placeholder='Ex: 14000' value={villaDetails.clubHouseSize} setValue={changeVillaDetails} />
       <FormInput labelFor='additionalProvision' labelTitle='Additional Provision' inputType='text' inputName='additionalProvision' placeholder='Any additional provisions' value={villaDetails.additionalProvision} setValue={changeVillaDetails} />
-      <FormInput labelFor='reraId' labelTitle='RERA ID' inputType='text' inputName='reraId' placeholder='12121232' value={villaDetails.reraId} setValue={changeVillaDetails} />
+      <FormInput labelFor='reraID' labelTitle='RERA ID' inputType='text' inputName='reraID' placeholder='12121232' value={villaDetails.reraID} setValue={changeVillaDetails} />
+      <FormInput labelFor='projectHighlightsPoints' labelTitle='Project Highlight Points' inputType='text' inputName='projectHighlightsPoints' placeholder='Project Highlight Points' value={villaDetails.projectHighlightsPoints} setValue={changeVillaDetails} />
     </>
   )
 }
@@ -224,21 +303,20 @@ const Page2 = ({villaDetails, setVillaDetails}: {villaDetails: VillaDetails, set
   )
 }
 
-const Page3 = ({villaDetails, setVillaDetails, changeVillaDetails}: {villaDetails: VillaDetails, setVillaDetails: React.Dispatch<React.SetStateAction<VillaDetails>>, changeVillaDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+const Page3 = ({villaDetails, setVillaDetails}: {villaDetails: VillaDetails, setVillaDetails: React.Dispatch<React.SetStateAction<VillaDetails>>}) => {
 
-  const [repoAmenities, setRepoAmenities] = useState<File[]>(villaDetails.amenities);
+  const [repoAmenities, setRepoAmenities] = useState<File[]>(villaDetails.amenitiesImages);
 
   useEffect(() => {
 
-    setVillaDetails({...villaDetails, amenities: repoAmenities });
+    setVillaDetails({...villaDetails, amenitiesImages: repoAmenities });
 
     // eslint-disable-next-line
   }, [repoAmenities]);
 
   return (
     <>
-      <FileUpload labelFor='amenities' labelTitle='Amenities' files={repoAmenities} setFiles={setRepoAmenities} />
-      <FormInput labelFor='projectHighlightPoints' labelTitle='Project Highlight Points' inputType='text' inputName='projectHighlightPoints' placeholder='Project Highlight Points' value={villaDetails.projectHighlightPoints} setValue={changeVillaDetails} />
+      <FileUpload labelFor='amenitiesImages' labelTitle='Amenities' files={repoAmenities} setFiles={setRepoAmenities} />
     </>
   )
 }

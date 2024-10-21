@@ -85,6 +85,36 @@
   transform: translateY(-50%);
 }
 
+/* CSS Loader */
+
+.basic:before {
+  content: "";
+  display: block;
+  height: 16px;
+  width: 16px;
+  -webkit-animation: spin 0.5s infinite linear;
+  animation: spin 0.5s infinite linear;
+  border: 3px var(--c-white) solid;
+  border-left-color: transparent;
+  border-radius: 100%;
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* CSS Loader */
+
 @media (hover: hover) and (pointer: fine) {
   .page__changer button:not(:disabled):is(:hover, :focus-visible) {
     background-color: var(--c-primaryShade);

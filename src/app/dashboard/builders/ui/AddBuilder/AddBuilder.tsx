@@ -1,11 +1,17 @@
 "use client";
-import FormInput from "@/components/FormInput/FormInput";
 import styles from "./AddBuilder.module.css";
 import React, {useEffect, useRef, useState} from 'react'
 
 // React Icons
 import { IoIosAdd } from 'react-icons/io'
 import { IoClose } from "react-icons/io5";
+
+// Utils
+import createToast from "@/utils/createToast";
+
+// UI
+import FormInput from "@/components/FormInput/FormInput";
+import { newBuilder } from "@/actions/builder";
 
 const AddBuilder = () => {
 
@@ -48,12 +54,14 @@ const AddBuilderPopup = ({setShowAddPopup}: {setShowAddPopup: React.Dispatch<Rea
         name: '',
         email: '',
         phoneNo: '',
-        companyName: ''
+        password: ''
     })
 
     const changeBuilderDetails = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBuilderDetails(prevState => ({...prevState, [e.target.name]: e.target.value}))
     }
+
+    const [responseLoading, setResponseLoading] = useState(false);
 
     return  (
         <aside className={styles.popup}>
@@ -71,15 +79,29 @@ const AddBuilderPopup = ({setShowAddPopup}: {setShowAddPopup: React.Dispatch<Rea
 
                 {/* Form */}
 
-                <form className={styles.add__form} onSubmit={(e) => {
-                    e.preventDefault()
+                <form className={styles.add__form} onSubmit={async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+                    setResponseLoading(true);
+                    const toastId = createToast('loading', 'Submitting details...');
+                    const response = await newBuilder(formData);
+                    (response === undefined) ? (
+                        createToast('success', 'Builder created successfully!', toastId),
+                        setShowAddPopup(false)
+                    ) : (
+                        createToast('error', response.message, toastId),
+                        setResponseLoading(false)
+                    );
                 }}>
                     <FormInput labelFor="name" labelTitle="Name" inputName="name" inputType="text" value={builderDetails.name} setValue={changeBuilderDetails} placeholder="Enter name" />
-                    <FormInput labelFor="email" labelTitle="Email" inputName="email" inputType="email" value={builderDetails.email} setValue={changeBuilderDetails} placeholder="Enter email" />
+                    <FormInput labelFor="email" labelTitle="Email" inputName="email" inputType="email" value={builderDetails.email} setValue={changeBuilderDetails} placeholder="Enter email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
                     <FormInput labelFor="phoneNo" labelTitle="Phone Number" inputName="phoneNo" inputType="text" value={builderDetails.phoneNo} setValue={changeBuilderDetails} placeholder="Enter phone number" />
-                    <FormInput labelFor="companyName" labelTitle="Company Name" inputName="companyName" inputType="text" value={builderDetails.companyName} setValue={changeBuilderDetails} placeholder="Enter Company name" />
+                    <FormInput labelFor="password" labelTitle="Password" inputName="password" inputType="password" value={builderDetails.password} setValue={changeBuilderDetails} placeholder="Enter Password" />
 
-                    <button type="submit" title="Add builder">Add</button>
+                    <button type="submit" disabled={responseLoading} title="Add builder">{responseLoading ? (
+                        <div className={styles.basic}></div>
+                        ) : 'Add builder'}
+                    </button>
                 </form>
 
                 {/* Form */}

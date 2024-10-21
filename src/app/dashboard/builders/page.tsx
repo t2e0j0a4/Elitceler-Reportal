@@ -1,16 +1,21 @@
 import React, { Suspense } from 'react'
 import styles from "./page.module.css";
 
-// Data
-import { fetchedBuilders } from '@/data';
-
 // UI
 import AddBuilder from './ui/AddBuilder/AddBuilder';
 import BuilderToggle from './ui/BuilderToggle/BuilderToggle';
 import BuildersTable from './ui/BuildersTable/BuildersTable';
 
+// Actions
+import { fetchBuilderStatus } from '@/actions/builder';
 
-const Builders = ({searchParams}: { searchParams: { builder: 'approved' | 'pending' | 'rejected' }}) => {
+// Types
+import { BuildersDataType } from '@/types';
+
+
+const Builders = async ({searchParams}: { searchParams: { builder: 'approved' | 'pending' | 'rejected' }}) => {
+
+  const fetchedBuilders: BuildersDataType = await fetchBuilderStatus();
 
   const { approvedBuildersLength, approvedBuilders, pendingBuildersLength, pendingBuilders, rejectedBuildersLength, rejectedBuilders } = fetchedBuilders;
 
