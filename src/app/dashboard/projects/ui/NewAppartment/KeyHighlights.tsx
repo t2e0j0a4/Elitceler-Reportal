@@ -49,7 +49,7 @@ const KeyHighlights = ({apartmentDetails, setApartmentDetails}: {apartmentDetail
             const newHighlight = `${selectedHighlightScope.name} ${highlightOtherInfo.destination}-${highlightOtherInfo.timeTaken}`;
 
             setApartmentDetails({
-                ...apartmentDetails, keyHighlights: [...apartmentDetails.keyHighlights, newHighlight]
+                ...apartmentDetails, nearByHighlights: [...apartmentDetails.nearByHighlights, newHighlight]
             })
 
             setselectedHighlightScope({
@@ -68,10 +68,10 @@ const KeyHighlights = ({apartmentDetails, setApartmentDetails}: {apartmentDetail
     }
 
     const removeHighlight = (option: string) => {
-        const newOptions = apartmentDetails.keyHighlights.filter((opt) => opt !== option);
+        const newOptions = apartmentDetails.nearByHighlights.filter((opt) => opt !== option);
 
         setApartmentDetails({
-            ...apartmentDetails, keyHighlights: newOptions
+            ...apartmentDetails, nearByHighlights: newOptions
         })
     }
   
@@ -85,7 +85,7 @@ const KeyHighlights = ({apartmentDetails, setApartmentDetails}: {apartmentDetail
             </div>
 
             <div className={`${styles.all__options} ${styles.highlight__options}`}>
-                {apartmentDetails.keyHighlights.map((option, index) => (
+                {apartmentDetails.nearByHighlights.map((option, index) => (
                     option ? (<span key={index}>{option} <button type="button" title="Remove" onClick={() => removeHighlight(option)}><IoClose /></button></span>) : <></>
                 ))}
             </div>

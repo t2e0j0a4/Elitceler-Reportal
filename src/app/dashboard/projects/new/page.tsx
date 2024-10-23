@@ -8,12 +8,30 @@ import NewVilla from '../ui/NewVilla/NewVilla';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import NewAppartment from '../ui/NewAppartment/NewAppartment';
 
-// Data
-import { fetchedBuilders } from '@/data';
+// Actions
+import { fetchBuilderStatus } from '@/actions/builder';
+
+// Types
+import { BuildersDataType, BuilderType } from '@/types';
+
 
 const NewProject = () => {
 
-    const { approvedBuilders } = fetchedBuilders;
+    const [fetchBuilderLoad, setFetchBuilderLoad] = useState(true);
+
+    const [builders, setBuilders] = useState<BuilderType[]>([]); 
+
+    const fetchApprovedBuilders = async () => {
+        setFetchBuilderLoad(true);
+        const fetchedBuilders: BuildersDataType = await fetchBuilderStatus();
+        const {approvedBuilders} = fetchedBuilders;
+        setBuilders(approvedBuilders);
+        setFetchBuilderLoad(false);
+    }
+
+    useEffect(() => {
+        fetchApprovedBuilders();
+    }, []);
 
     const [selectedBuilder, setSelectedBuilder] = useState<{
         id: string,
@@ -46,24 +64,38 @@ const NewProject = () => {
 
         <div className={styles.new__project}>
 
-            <div className={styles.select__builder}>
-                <FormSelect options={approvedBuilders} optionPlaceholder='Select a builder' setSelectedOption={setSelectedBuilder} selectedOption={selectedBuilder}  />
-            </div>
+            {
+                !fetchBuilderLoad ? (
+                    (
+                        builders.length !== 0 ? (
+                            <>
+                                <div className={styles.select__builder}>
+                                    <FormSelect options={builders} optionPlaceholder='Select a builder' setSelectedOption={setSelectedBuilder} selectedOption={selectedBuilder}  />
+                                </div>
 
-            <div className={styles.new__btns}>
-                <button type='button' disabled={selectedBuilder.id ? false : true} onClick={(e) => {
-                    setProjectType('appartment');
-                    
-                }} aria-disabled={selectedBuilder.id ? false : true} aria-label='Add Appartment' title='Add Appartment'>Add Appartment</button>
-                <button type='button' disabled={selectedBuilder.id ? false : true} onClick={(e) => {
-                    setProjectType('villa');
-                    
-                }} aria-disabled={selectedBuilder.id ? false : true} aria-label='Add Villa' title='Add Villa'>Add Villa</button>
-                <button type='button' disabled={selectedBuilder.id ? false : true} onClick={(e) => {
-                    setProjectType('plot');
-                    
-                }} aria-disabled={selectedBuilder.id ? false : true} aria-label='Add Plot' title='Add Plot'>Add Plot</button>
-            </div>
+                                <div className={styles.new__btns}>
+                                    <button type='button' disabled={selectedBuilder.id ? false : true} onClick={(e) => {
+                                        setProjectType('appartment');
+                                        
+                                    }} aria-disabled={selectedBuilder.id ? false : true} aria-label='Add Appartment' title='Add Appartment'>Add Appartment</button>
+                                    <button type='button' disabled={selectedBuilder.id ? false : true} onClick={(e) => {
+                                        setProjectType('villa');
+                                        
+                                    }} aria-disabled={selectedBuilder.id ? false : true} aria-label='Add Villa' title='Add Villa'>Add Villa</button>
+                                    <button type='button' disabled={selectedBuilder.id ? false : true} onClick={(e) => {
+                                        setProjectType('plot');
+                                        
+                                    }} aria-disabled={selectedBuilder.id ? false : true} aria-label='Add Plot' title='Add Plot'>Add Plot</button>
+                                </div>
+                            </>
+                        ) : (
+                            <p>No builders are approved to add project...</p>
+                        )
+                    )
+                ) : (
+                    <p>Loading builders...</p>
+                )
+            }
 
         </div>   
 

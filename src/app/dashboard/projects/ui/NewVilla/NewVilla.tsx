@@ -69,25 +69,26 @@ const NewVilla = ({builderId}: {builderId: string}) => {
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('villaName', villaDetails.villaName);
-      formData.append('villaLocation', villaDetails.villaLocation);
-      formData.append('villaSize', villaDetails.villaSize);
-      formData.append('villaFacing', villaDetails.villaFacing);
-      formData.append('basePricePerSqft', villaDetails.basePricePerSqft);
-      formData.append('launchDate', new Date(villaDetails.launchDate).toISOString());
-      formData.append('possessionDate', new Date(villaDetails.possessionDate).toISOString());
-      formData.append('villasConfiguration', villaDetails.villasConfiguration);
-      formData.append('villaSizeStarting', villaDetails.villaSizeStarting);
-      formData.append('villaSizeEnding', villaDetails.villaSizeEnding);
-      formData.append('plotSizeStarting', villaDetails.plotSizeStarting);
-      formData.append('plotSizeEnding', villaDetails.plotSizeEnding);
-      formData.append('priceRangeStarting', villaDetails.priceRangeStarting);
-      formData.append('priceRangeEnding', villaDetails.priceRangeEnding);
-      formData.append('clubHouseSize', villaDetails.clubHouseSize);
-      formData.append('additionalProvision', villaDetails.additionalProvision);
-      formData.append('reraID', villaDetails.reraID);
-      formData.append('projectHighlightsPoints', villaDetails.projectHighlightsPoints);
-      formData.append('noOfVilla', '00');
+      formData.append('villaName', villaDetails.villaName ? villaDetails.villaName : '-');
+      formData.append('villaLocation', villaDetails.villaLocation ? villaDetails.villaLocation : '-');
+      formData.append('villaSize', villaDetails.villaSize ? villaDetails.villaSize : '-');
+      formData.append('villaFacing', villaDetails.villaFacing ? villaDetails.villaFacing : '-');
+      formData.append('basePricePerSqft', villaDetails.basePricePerSqft ? villaDetails.basePricePerSqft : '-');
+      formData.append('launchDate', villaDetails.launchDate ? new Date(villaDetails.launchDate).toISOString() : new Date().toISOString());
+      formData.append('possessionDate', villaDetails.possessionDate ? new Date(villaDetails.possessionDate).toISOString() : new Date().toISOString());
+      formData.append('villasConfiguration', villaDetails.villasConfiguration ? villaDetails.villasConfiguration : '-');
+      formData.append('villaSizeStarting', villaDetails.villaSizeStarting ? villaDetails.villaSizeStarting : '-');
+      formData.append('villaSizeEnding', villaDetails.villaSizeEnding ? villaDetails.villaSizeEnding : '-');
+      formData.append('plotSizeStarting', villaDetails.plotSizeStarting ? villaDetails.plotSizeStarting : '-');
+      formData.append('plotSizeEnding', villaDetails.plotSizeEnding ? villaDetails.plotSizeEnding : '-');
+      formData.append('priceRangeStarting', villaDetails.priceRangeStarting ? villaDetails.priceRangeStarting : '-');
+      formData.append('priceRangeEnding', villaDetails.priceRangeEnding ? villaDetails.priceRangeEnding : '-');
+      formData.append('clubHouseSize', villaDetails.clubHouseSize ? villaDetails.clubHouseSize : '-');
+      formData.append('additionalProvision', villaDetails.additionalProvision ? villaDetails.additionalProvision : '-');
+      formData.append('reraID', villaDetails.reraID ? villaDetails.reraID : '-');
+      formData.append('projectHighlightsPoints', villaDetails.projectHighlightsPoints ? villaDetails.projectHighlightsPoints : '-');
+      
+      formData.append('noOfVilla', '-');
       
       formData.append('elevationImages', villaDetails.siteMap[0]);
 
@@ -123,8 +124,7 @@ const NewVilla = ({builderId}: {builderId: string}) => {
 
       (villaAddResponse.status === 'success') ? (
         createToast('success', villaAddResponse.message, toastId),
-        setResponseLoading(false),
-        router.refresh()
+        router.push('/dashboard/projects')
       ) : (
         createToast('error', villaAddResponse.message, toastId),
         setResponseLoading(false)

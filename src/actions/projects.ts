@@ -134,7 +134,7 @@ export async function addNewApartment(formData: FormData, builderId: string) {
             }
         }
 
-        const projectId = apartmentAddData.data.projectId;
+        const projectId = apartmentAddData.project.projectId;
 
         return updateBuilderWithProject("apartment", builderId, projectId);
         

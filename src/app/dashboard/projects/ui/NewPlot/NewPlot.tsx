@@ -64,19 +64,19 @@ const NewPlot = ({builderId}: {builderId: string}) => {
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('plotName', plotDetails.plotName);
-      formData.append('plotLocation', plotDetails.plotLocation);
-      formData.append('plotLayoutSize', plotDetails.plotLayoutSize);
-      formData.append('plotType', plotDetails.plotType);
-      formData.append('approvals', plotDetails.approvals);
-      formData.append('totalPlots', plotDetails.totalPlots);
-      formData.append('plotSizes', plotDetails.plotSizes);
-      formData.append('plotFacing', plotDetails.plotFacing);
-      formData.append('reraID', plotDetails.reraID);
-      formData.append('pricePerSqYard', plotDetails.pricePerSqYard);
-      formData.append('priceStartsFrom', plotDetails.priceStartsFrom);
-      formData.append('amenities', plotDetails.amenities);
-      formData.append('projectHighlightsPoints', plotDetails.projectHighlightsPoints);
+      formData.append('plotName', plotDetails.plotName ? plotDetails.plotName : '-');
+      formData.append('plotLocation', plotDetails.plotLocation ? plotDetails.plotLocation : '-');
+      formData.append('plotLayoutSize', plotDetails.plotLayoutSize ? plotDetails.plotLayoutSize : '-');
+      formData.append('plotType', plotDetails.plotType ? plotDetails.plotType : '-');
+      formData.append('approvals', plotDetails.approvals ? plotDetails.approvals : '-');
+      formData.append('totalPlots', plotDetails.totalPlots ? plotDetails.totalPlots : '-');
+      formData.append('plotSizes', plotDetails.plotSizes ? plotDetails.plotSizes : '-');
+      formData.append('plotFacing', plotDetails.plotFacing ? plotDetails.plotFacing : '-');
+      formData.append('reraID', plotDetails.reraID ? plotDetails.reraID : '-');
+      formData.append('pricePerSqYard', plotDetails.pricePerSqYard ? plotDetails.pricePerSqYard : '-');
+      formData.append('priceStartsFrom', plotDetails.priceStartsFrom ? plotDetails.priceStartsFrom : '-');
+      formData.append('amenities', plotDetails.amenities ? plotDetails.amenities : '-');
+      formData.append('projectHighlightsPoints', plotDetails.projectHighlightsPoints ? plotDetails.projectHighlightsPoints : '-');
 
       if (plotDetails.siteMap) {
         plotDetails.siteMap.forEach((file) => {
@@ -116,7 +116,7 @@ const NewPlot = ({builderId}: {builderId: string}) => {
 
       (plotAddResponse.status === 'success') ? (
         createToast('success', plotAddResponse.message, toastId),
-        router.refresh()
+        router.push('/dashboard/projects')
       ) : (
         createToast('error', plotAddResponse.message, toastId),
         setResponseLoading(false)

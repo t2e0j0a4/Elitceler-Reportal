@@ -20,47 +20,46 @@ export type BuilderType = {
 };
 
 export type ApartmentDetails = {
-  projectName: string;
+  name: string;
   description: string;
+  reraID: string;
   projectType: string;
-  launchDate: string;
-  possessionDate: string;
-  basePrice: string;
+  projectLaunchedDate: string;
+  projectPossessionDate: string;
   totalArea: string;
-  projectSize: string;
-  floors: string;
-  flats: string;
-  flatsPerFloor: string;
-  towers: string;
+  pricePerSquareFeetRate: string;
   projectLocation: string;
   latitude: string;
   longitude: string;
-
-  amenitiesBasic: string[],
-  clubHouseAmenities: string[],
-  outdoorAmenities: string[],
-  keyHighlights: string[],
+  projectSize: string;
+  landmark: string;
+  noOfFloors: string;
+  noOfFlats: string;
+  noOfFlatsPerFloor: string;
+  noOfTowers: string;
   constructionType: string;
-  clubHouseSize: string;
+  ClubHouseSize: string;
   totalOpenSpace: string;
+  videoLink: string;
+  projectHighlightsPoints: string;
 
+  amenities: string[],
+  clubHouseAmenities: string[],
+  OutdoorAmenities: string[],
+  
+  nearByHighlights: string[],
+  bhkType: string[];
+  
   siteMap: File[];
   masterPlan: File[];
+  elevationImages: File[];
+  amenitiesImages: File[];
+  floorPlanPdf: File[];
+  reraCertificate: File[];
+  brochurePdf: File[];
+  priceSheet: File[];
   projectHighlights: File[];
 
-  elevationImages: File[];
-  amenities: File[];
-
-  floorPlan: File[];
-  videoLink: string;
-  brochure: File[];
-
-  bhkType: string[];
-  priceSheet: File[];
-
-  reraId: string;
-  certificates: File[];
-  projectHighlightPoints: string;
 };
 
 export type VillaDetails = {
