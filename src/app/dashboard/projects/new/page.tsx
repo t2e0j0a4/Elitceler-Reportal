@@ -74,7 +74,7 @@ const NewProject = () => {
         <section className={styles.project__main}>
             {
                 projectType === 'appartment' && selectedBuilder.id ? 
-                <NewAppartment /> : 
+                <NewAppartment builderId={selectedBuilder.id} /> : 
                 projectType === 'plot' && selectedBuilder.id ? 
                 <NewPlot builderId={selectedBuilder.id}/> : 
                 projectType === 'villa' && selectedBuilder.id ? 

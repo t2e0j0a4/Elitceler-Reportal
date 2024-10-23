@@ -3,15 +3,19 @@ import React, {useEffect, useState} from 'react';
 import styles from "./NewAppartment.module.css";
 
 // Components
+import KeyHighlights from './KeyHighlights';
 import FormInput from '@/components/FormInput/FormInput';
 import FormSelect from '@/components/FormSelect/FormSelect';
 import FileUpload from '@/components/FileUpload/FileUpload';
 
 // Types
 import { ApartmentDetails } from '@/types';
-import { IoClose } from 'react-icons/io5';
 
-const NewAppartment = () => {
+// React Icons
+import { IoClose } from 'react-icons/io5';
+import BHKType from './BHKType';
+
+const NewAppartment = ({builderId} : {builderId: string}) => {
 
   const [pages, setPages] = useState<{
     currentPage: number;
@@ -41,6 +45,7 @@ const NewAppartment = () => {
     amenitiesBasic: [],
     clubHouseAmenities: [],
     outdoorAmenities: [],
+    keyHighlights: [],
     constructionType: '',
     clubHouseSize: '',
     totalOpenSpace: '',
@@ -56,6 +61,7 @@ const NewAppartment = () => {
     videoLink: '',
     brochure: [],
 
+    bhkType: [],
     priceSheet : [],
 
     reraId: '',
@@ -90,9 +96,9 @@ const NewAppartment = () => {
           ) : pages.currentPage === 4 ? (
             <Page4 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
           ) : pages.currentPage === 5 ? (
-            <Page5 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} changeApartmentDetails={changeApartmentDetails} />
+            <Page5 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails}  />
           ) : pages.currentPage === 6 ? (
-            <Page6 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
+            <Page6 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} changeApartmentDetails={changeApartmentDetails} />
           ) : pages.currentPage === 7 ? (
             <Page7 apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} changeApartmentDetails={changeApartmentDetails} />
           ) : <></>
@@ -286,6 +292,8 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
         </div>
       </>
 
+      <KeyHighlights apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
+
       <FormSelect options={constructionTypes} optionPlaceholder='Select construction type' selectedOption={selctedConstructionType} setSelectedOption={setSelctedConstructionType} />
       <FormInput labelFor='clubHouseSize' labelTitle='Club House Size' inputType='text' inputName='clubHouseSize' placeholder='Enter Club house size' value={apartmentDetails.clubHouseSize} setValue={changeApartmentDetails} />
       <FormInput labelFor='totalOpenSpace' labelTitle='Total Open Space' inputType='text' inputName='totalOpenSpace' placeholder='Enter total open space' value={apartmentDetails.totalOpenSpace} setValue={changeApartmentDetails} />
@@ -335,41 +343,34 @@ const Page4 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: Apart
   )
 }
 
-const Page5 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+const Page5 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>> }) => {
 
   const [repoFloorPlan, setRepoFloorPlan] = useState<File[]>(apartmentDetails.floorPlan);
   const [repoBrochure, setRepoBrochure] = useState<File[]>(apartmentDetails.brochure);
-
-  useEffect(() => {
-
-    setApartmentDetails({...apartmentDetails, floorPlan: repoFloorPlan, brochure: repoBrochure });
-
-    // eslint-disable-next-line
-  }, [repoBrochure, repoFloorPlan]);
-
-  return (
-    <>
-      <FileUpload labelFor='floorPlan' labelTitle='Floor Plan' files={repoFloorPlan} setFiles={setRepoFloorPlan} />
-      <FormInput labelFor='videoLink' labelTitle='Video Link' inputType='text' inputName='videoLink' placeholder='Video Link (https only)' value={apartmentDetails.videoLink} setValue={changeApartmentDetails} />
-      <FileUpload labelFor='brochure' labelTitle='Brochures' files={repoBrochure} setFiles={setRepoBrochure} />
-    </>
-  )
-}
-
-const Page6 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>}) => {
-
   const [repoPriceSheet, setRepoPriceSheet] = useState<File[]>(apartmentDetails.priceSheet);
 
   useEffect(() => {
 
-    setApartmentDetails({...apartmentDetails, priceSheet: repoPriceSheet });
+    setApartmentDetails({...apartmentDetails, floorPlan: repoFloorPlan, brochure: repoBrochure, priceSheet: repoPriceSheet });
 
     // eslint-disable-next-line
-  }, [repoPriceSheet]);
+  }, [repoBrochure, repoFloorPlan, repoPriceSheet]);
 
   return (
     <>
+      <FileUpload labelFor='floorPlan' labelTitle='Floor Plan' files={repoFloorPlan} setFiles={setRepoFloorPlan} />
+      <FileUpload labelFor='brochure' labelTitle='Brochures' files={repoBrochure} setFiles={setRepoBrochure} />
       <FileUpload labelFor='priceSheet' labelTitle='Price Sheet' files={repoPriceSheet} setFiles={setRepoPriceSheet} />
+    </>
+  )
+}
+
+const Page6 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+
+  return (
+    <>
+      <BHKType apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
+      <FormInput labelFor='videoLink' labelTitle='Video Link' inputType='text' inputName='videoLink' placeholder='Video Link (https only)' value={apartmentDetails.videoLink} setValue={changeApartmentDetails} />
     </>
   )
 }
@@ -387,9 +388,9 @@ const Page7 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
 
   return (
     <>
-      <FileUpload labelFor='certificates' labelTitle='Upload Certificates' files={repoCertificates} setFiles={setRepoCertificates} />
       <FormInput labelFor='reraId' labelTitle='RERA ID' inputType='text' inputName='reraId' placeholder='12121232' value={apartmentDetails.reraId} setValue={changeApartmentDetails} />
       <FormInput labelFor='projectHighlightPoints' labelTitle='Project Highlight Points' inputType='text' inputName='projectHighlightPoints' placeholder='Project Highlight Points' value={apartmentDetails.projectHighlightPoints} setValue={changeApartmentDetails} />
+      <FileUpload labelFor='certificates' labelTitle='Upload Certificates' files={repoCertificates} setFiles={setRepoCertificates} />
     </>
   )
 }

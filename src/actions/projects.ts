@@ -111,6 +111,41 @@ export async function addNewApartment(formData: FormData, builderId: string) {
             message: 'Unauthorized! Please Login.'
         }
     }
+
+    console.log(formData, builderId);
+
+    try {
+
+        const apartmentAddResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/createApartment`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: formData
+        });
+
+        const apartmentAddData = await apartmentAddResponse.json();
+
+        if (!apartmentAddResponse.ok) {
+            console.log(apartmentAddData)
+            return {
+                status: 'error',
+                message: 'Issues adding apartment. Try again'
+            }
+        }
+
+        const projectId = apartmentAddData.data.projectId;
+
+        return updateBuilderWithProject("apartment", builderId, projectId);
+        
+    } catch (error) {
+        console.log(error)
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+
 }
 
 

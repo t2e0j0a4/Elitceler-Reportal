@@ -39,6 +39,7 @@ export type ApartmentDetails = {
   amenitiesBasic: string[],
   clubHouseAmenities: string[],
   outdoorAmenities: string[],
+  keyHighlights: string[],
   constructionType: string;
   clubHouseSize: string;
   totalOpenSpace: string;
@@ -54,6 +55,7 @@ export type ApartmentDetails = {
   videoLink: string;
   brochure: File[];
 
+  bhkType: string[];
   priceSheet: File[];
 
   reraId: string;

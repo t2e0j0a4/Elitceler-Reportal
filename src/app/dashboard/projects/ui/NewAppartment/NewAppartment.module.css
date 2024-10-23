@@ -97,11 +97,12 @@
     margin-top: 1rem;
 }
 
-.page__changer button {
+.page__changer button, .key__highlights button {
     padding: 0.36rem 0.7rem;
     font-size: 0.9rem;
     display: flex;
     justify-content: center;
+    font-family: inherit;
     align-items: center;
     border-radius: 4px;
     border: 1.2px solid var(--c-primary);
@@ -127,8 +128,57 @@
 
 }
 
+.key__highlights {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 0.4rem;
+}
+
+.bhks__type {
+    align-items: center;
+}
+
+.key__highlights input {
+    width: 100%;
+    padding: 0.48rem 0.7rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1.2px solid transparent;
+    box-shadow: 0 0 1px 0.8px #23232330;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.8rem;
+}
+
+.key__highlights input::placeholder {
+    color: #232323A0;
+}
+
+.key__highlights input:focus {
+    border-color: var(--c-primaryShade);
+}
+
+.key__highlights button {
+    padding: 0.48rem 0.7rem;
+}
+
+.bhks__type button {
+    margin-top: 1.8rem;
+}
+
+.highlight__options {
+    margin-bottom: 0.8rem;
+}
+
 @media (hover:hover) and (pointer: fine) {
-    .page__changer button:not(:disabled):is(:hover, :focus-visible) {
+    .page__changer button:not(:disabled):is(:hover, :focus-visible), .key__highlights button:is(:hover, :focus-visible) {
         background-color: var(--c-primaryShade);
         color: var(--c-white);
         border-color: var(--c-primaryShade);
@@ -137,5 +187,28 @@
     .all__options span button:is(:hover, :focus-visible) {
         background-color: var(--c-primaryShade);
         color: var(--c-white);
+        border-color: var(--c-primaryShade);
+    }
+}
+
+@media all and (800px <= width <= 900px) {
+    .key__highlights {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .bhks__type button {
+        margin-top: 0;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .key__highlights {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .bhks__type button {
+        margin-top: 0;
     }
 }
