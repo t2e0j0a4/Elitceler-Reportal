@@ -341,3 +341,73 @@ export async function fetchAllAdminApartments() {
         }
     }
 }
+
+// 8. Fetch all builders projects - apartments, villas, plots
+
+export async function fetchAllBuilderProjects() {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    try {
+
+        const allBuilderProjectsResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/getBuilderProjects`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        if (!allBuilderProjectsResponse.ok) {
+            throw new Error('Issues fetching builder projects. Try again!')
+        }
+
+        const projectsData = await allBuilderProjectsResponse.json();
+
+        return projectsData;
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+}
+
+/*
+
+{
+    message: '',
+    apartment: {
+        count: 1,
+        categorizedApat: {
+            PENDING: [],
+            APPROVED: [],
+            REJECTED: []
+        }
+    },
+    villa: {
+        count: 2,
+        categorizedVilla: {
+            PENDING: [],
+            APPROVED: [],
+            REJECTED: []
+        }
+    },
+    plots: {
+        count: 3,
+        categorizedPlots: {
+            PENDING: [],
+            APPROVED: [],
+            REJECTED: []
+        }
+    }
+}
+
+*/

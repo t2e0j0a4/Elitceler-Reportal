@@ -19,7 +19,6 @@ export type BuilderType = {
 };
 
 export type ApartmentDetails = {
-  
   projectId?: string;
   adminId?: string;
   assignedBuilderID?: string;
@@ -64,6 +63,9 @@ export type ApartmentDetails = {
   brochurePdf: File[];
   priceSheet: File[];
   projectHighlights: File[];
+
+  createdAt?: string;
+  projectStatus?: string;
 };
 
 export type VillaDetails = {

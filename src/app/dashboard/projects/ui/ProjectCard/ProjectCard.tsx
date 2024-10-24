@@ -13,7 +13,7 @@ import { ApartmentDetails, PlotDetails, VillaDetails } from '@/types';
 const PlotCard = ({projectDetails}: {projectDetails: PlotDetails}) => {
 
     const [changeHeroImage, setChangeHeroImage] = useState({
-        currentImage: projectDetails.plotImages.length ? 1 : 0,
+        currentImage: projectDetails.plotImages && projectDetails.plotImages.length ? 1 : 0,
         totalImages: projectDetails.plotImages ? projectDetails.plotImages.length : 0
     });
 
@@ -67,7 +67,7 @@ const PlotCard = ({projectDetails}: {projectDetails: PlotDetails}) => {
 const VillaCard = ({projectDetails}: {projectDetails: VillaDetails}) => {
 
     const [changeHeroImage, setChangeHeroImage] = useState({
-        currentImage: projectDetails.amenitiesImages.length ? 1 : 0,
+        currentImage: projectDetails.amenitiesImages && projectDetails.amenitiesImages.length ? 1 : 0,
         totalImages: projectDetails.amenitiesImages ? projectDetails.amenitiesImages.length : 0
     });
 
@@ -119,7 +119,7 @@ const VillaCard = ({projectDetails}: {projectDetails: VillaDetails}) => {
 const ApartmentCard = ({projectDetails}: {projectDetails: ApartmentDetails}) => {
 
     const [changeHeroImage, setChangeHeroImage] = useState({
-        currentImage: projectDetails.amenitiesImages.length ? 1 : 0,
+        currentImage: projectDetails.amenitiesImages && projectDetails.amenitiesImages.length ? 1 : 0,
         totalImages: projectDetails.amenitiesImages ? projectDetails.amenitiesImages.length : 0
     });
 
