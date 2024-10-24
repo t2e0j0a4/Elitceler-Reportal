@@ -35,11 +35,11 @@ const LoginForm = () => {
         </div>
         <div className={styles.form__input}>
           <label htmlFor="email">Email</label>
-          <input required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$' type="email" name='email' id='email' placeholder='Enter Email' />
+          <input required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$' type="email" name='email' id='email' placeholder='Enter Email' title='Enter your login email' />
         </div>
         <div className={styles.form__input}>
           <label htmlFor="password">Password</label>
-          <input required type="password" name='password' id='password' placeholder='Enter Password'/>
+          <input required type="password" name='password' id='password' placeholder='Enter Password' title='Enter your login password'/>
         </div>
         <button disabled={responseLoading} type='submit'>{responseLoading ? (
           <div className={styles.basic}></div>

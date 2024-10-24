@@ -52,8 +52,7 @@ export const fetchedBuilders: {
       email: "uly1l1jwwowo@eevafyxh.com",
       phoneNumber: "1234567890",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA1234432198",
+      AboutBuilder: ""
     },
     {
       id: "ce5a711e-4c43-4cfe-bd56-fc6b76716eaa",
@@ -61,8 +60,7 @@ export const fetchedBuilders: {
       email: "vamshi2425@gmail.com",
       phoneNumber: "+919776176197",
       CompanyName: "Vamshi Krishna",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA7766554433",
+      AboutBuilder: ""
     },
     {
       id: "1c937070-1385-4f5f-bd73-b627fba07866",
@@ -70,8 +68,7 @@ export const fetchedBuilders: {
       email: "uly1l1jowo@vafyxh.com",
       phoneNumber: "+919347243575",
       CompanyName: "Anvita Projects",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA1234567890",
+      AboutBuilder: ""
     },
     {
       id: "d1671374-cc4f-4f1a-a557-eded88d0ca3b",
@@ -79,8 +76,7 @@ export const fetchedBuilders: {
       email: "saikrishna.alishala@gmail.com",
       phoneNumber: "+917075202565",
       CompanyName: "ElitCeler Technologies",
-      AboutBuilder: "The best",
-      CompanyRERAnumber: "RERA5566778899",
+      AboutBuilder: "The best"
     },
     {
       id: "0534c7c3-8746-4880-b4fb-c1258782d540",
@@ -88,8 +84,7 @@ export const fetchedBuilders: {
       email: "adminBuilder@gmail.com",
       phoneNumber: "9087892651",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "",
+      AboutBuilder: ""
     },
   ],
   pendingBuilders: [
@@ -99,8 +94,7 @@ export const fetchedBuilders: {
       email: "ulyee1l1jwwowo@eevafyxh.com",
       phoneNumber: "1234567890",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA3456789",
+      AboutBuilder: ""
     },
     {
       id: "b446e4bf-26ef-4523-bc2f-f33177a1c713",
@@ -108,8 +102,7 @@ export const fetchedBuilders: {
       email: "if5k55gx4q@wywnxa.com",
       phoneNumber: "9876509876",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA9876543211",
+      AboutBuilder: ""
     },
     {
       id: "0f469e88-3893-43bc-8145-bac8231a4d04",
@@ -117,8 +110,7 @@ export const fetchedBuilders: {
       email: "abcdefgh@hmmail.com",
       phoneNumber: "+919876543213",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA12345678",
+      AboutBuilder: ""
     },
     {
       id: "5eecd972-3581-4015-9de1-7b0e8df886d1",
@@ -126,8 +118,7 @@ export const fetchedBuilders: {
       email: "Vamshi2425@gmail.com",
       phoneNumber: "+919700399900",
       CompanyName: "Vamshi Krishna ",
-      AboutBuilder: "Hyderabad based builder ",
-      CompanyRERAnumber: "RERA123467890",
+      AboutBuilder: "Hyderabad based builder "
     },
     {
       id: "60e83caf-da1f-4ed9-b22f-3fdf0f5d254b",
@@ -135,8 +126,7 @@ export const fetchedBuilders: {
       email: "jejej@gmail.com",
       phoneNumber: "+919876521987",
       CompanyName: "builde",
-      AboutBuilder: "jfnjrffr",
-      CompanyRERAnumber: "RERA567890",
+      AboutBuilder: "jfnjrffr"
     },
     {
       id: "66f65c9e-aa7c-47f5-83e4-2cbef23ba450",
@@ -144,8 +134,7 @@ export const fetchedBuilders: {
       email: "vy3uoid9sn@rfcdrive.com",
       phoneNumber: "9876509870",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA12367890",
+      AboutBuilder: ""
     },
     {
       id: "6e66d390-0a74-4044-8674-e03716f89ec1",
@@ -153,8 +142,7 @@ export const fetchedBuilders: {
       email: "hahah@gmail.com",
       phoneNumber: "+919828383838",
       CompanyName: "",
-      AboutBuilder: "builderr",
-      CompanyRERAnumber: "RERA123",
+      AboutBuilder: "builderr"
     },
     {
       id: "92512cc6-ad7f-470e-847a-1d7aacb6e5b0",
@@ -162,8 +150,7 @@ export const fetchedBuilders: {
       email: "alexo@eevafyxh.com",
       phoneNumber: "1234567890",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA6543210",
+      AboutBuilder: ""
     },
     {
       id: "99c129d0-07e1-455d-a3a5-17d2d81253c6",
@@ -171,8 +158,7 @@ export const fetchedBuilders: {
       email: "trent@eevafyxh.com",
       phoneNumber: "1234567890",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA2233445",
+      AboutBuilder: ""
     },
     {
       id: "ad9bca17-919c-4181-83a1-6dbb8f4bd73a",
@@ -180,8 +166,7 @@ export const fetchedBuilders: {
       email: "abcdbuilder@gmail.com",
       phoneNumber: "+916302224876",
       CompanyName: "builderABCD",
-      AboutBuilder: "hello builder",
-      CompanyRERAnumber: "RERA7766554",
+      AboutBuilder: "hello builder"
     },
     {
       id: "d61d0be6-67fd-4ad4-ac8e-68cd60c11554",
@@ -189,8 +174,7 @@ export const fetchedBuilders: {
       email: "uly1l1jowo@eevafyxh.com",
       phoneNumber: "1234567890",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA3344556677",
+      AboutBuilder: ""
     },
     {
       id: "f9f636e6-f379-4759-b604-48181031d5c4",
@@ -198,8 +182,7 @@ export const fetchedBuilders: {
       email: "egrmkr@gmail.com",
       phoneNumber: "+91998776662",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA98765432",
+      AboutBuilder: ""
     },
   ],
   rejectedBuilders: [
@@ -209,8 +192,7 @@ export const fetchedBuilders: {
       email: "abcd@yahoo.com",
       phoneNumber: "9876509876",
       CompanyName: "",
-      AboutBuilder: "",
-      CompanyRERAnumber: "RERA98743211",
+      AboutBuilder: ""
     },
   ],
 };

@@ -40,10 +40,10 @@ export async function newBuilder(formData: FormData) {
         // console.log(registerData);
 
         if (!registerResponse.ok) {
-            if (registerData.message) {
+            if (registerResponse.status === 400 && registerData.error) {
                 return {
                     status: 'error',
-                    message: registerData.message as string
+                    message: registerData.error as string
                 }
             }
             return {

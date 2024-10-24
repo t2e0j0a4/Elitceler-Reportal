@@ -103,6 +103,12 @@
     }
 }
 
+@media all and (max-width: 500px) {
+    .detail {
+        flex-direction: column;
+    }
+}
+
 @media all and (max-width: 700px) {
     
     .details__head button {

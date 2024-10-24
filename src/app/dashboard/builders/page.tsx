@@ -13,7 +13,7 @@ import { fetchBuilderStatus } from '@/actions/builder';
 import { BuildersDataType } from '@/types';
 
 
-const Builders = async ({searchParams}: { searchParams: { builder: 'approved' | 'pending' | 'rejected' }}) => {
+const Builders = async ({searchParams}: { searchParams: { builder: 'approved' | 'pending' | 'rejected' | '' }}) => {
 
   const fetchedBuilders: BuildersDataType = await fetchBuilderStatus();
 
@@ -41,7 +41,23 @@ const Builders = async ({searchParams}: { searchParams: { builder: 'approved' | 
 
           <>
             {
-              searchParams.builder === 'approved' ? (
+              searchParams.builder ? (
+                <></>
+              ) : (
+                approvedBuildersLength === 0 ? (
+                  <p>Empty Data!</p>
+                ) : (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <BuildersTable builders={approvedBuilders} builderType='approved' totalBuilders={approvedBuildersLength} />
+                  </Suspense>
+                )
+              )
+            }
+          </>
+
+          <>
+            {
+              searchParams.builder === 'approved' || searchParams.builder === "" ? (
                 approvedBuildersLength === 0 ? (
                   <p>Empty Data!</p>
                 ) : (
@@ -65,11 +81,7 @@ const Builders = async ({searchParams}: { searchParams: { builder: 'approved' | 
                     <BuildersTable builders={rejectedBuilders} builderType='rejected' totalBuilders={rejectedBuildersLength} />
                   </Suspense>
                 )
-              ) : (
-                <div className={styles.no__exist}>
-                  <p>No Staff Found!</p>
-                </div>
-              )
+              ): <></>
             }
           </>
 

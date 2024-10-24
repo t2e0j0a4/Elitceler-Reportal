@@ -49,8 +49,8 @@ const Sidebar = () => {
 
         <div className={styles.sidebar__menu}>
           <Link className={`${pathName === '/dashboard' ? styles.active__link : ''}`} href="/dashboard" title='Dashboard'><BiSolidDashboard fontSize={21}/><span>Dashboard</span></Link>
-          <Link className={`${pathName === '/dashboard/users' ? styles.active__link : ''}`} href="/dashboard/users" title='Manpower Supply'><FaPeopleGroup fontSize={21}/><span>Users</span></Link>
-          <Link className={`${pathName === '/dashboard/banners' ? styles.active__link : ''}`} href="/dashboard/banners" title='Banners'><MdOnlinePrediction fontSize={21}/><span>Banners</span></Link>
+          {/* <Link className={`${pathName === '/dashboard/users' ? styles.active__link : ''}`} href="/dashboard/users" title='Manpower Supply'><FaPeopleGroup fontSize={21}/><span>Users</span></Link>
+          <Link className={`${pathName === '/dashboard/banners' ? styles.active__link : ''}`} href="/dashboard/banners" title='Banners'><MdOnlinePrediction fontSize={21}/><span>Banners</span></Link> */}
           <Link className={`${pathName === '/dashboard/builders' ? styles.active__link : ''}`} href="/dashboard/builders" title='Builders'><MdEngineering fontSize={21}/><span>Builders</span></Link>
           <Link className={`${pathName === '/dashboard/projects' || pathName === '/dashboard/projects/new' ? styles.active__link : ''}`} href="/dashboard/projects" title='Projects'><BsFillHousesFill fontSize={21}/><span>Projects</span></Link>
         </div>

@@ -49,6 +49,8 @@
 .details__head button {
     width: 30px;
     height: 30px;
+    padding: 0;
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;

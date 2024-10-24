@@ -54,7 +54,8 @@ const AddBuilderPopup = ({setShowAddPopup}: {setShowAddPopup: React.Dispatch<Rea
         name: '',
         email: '',
         phoneNo: '',
-        password: ''
+        password: '',
+        companyName: ''
     })
 
     const changeBuilderDetails = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +73,7 @@ const AddBuilderPopup = ({setShowAddPopup}: {setShowAddPopup: React.Dispatch<Rea
 
                 <div className={styles.details__head}>
                     <h3>Add Builder</h3>
-                    <button type='button' title='Close' onClick={() => {setShowAddPopup(false)}}><IoClose fontSize={22}/></button>
+                    <button type='button' title='Close' onClick={() => {setShowAddPopup(false)}}><IoClose fontSize={21}/></button>
                 </div>
 
                 {/* Head */}
@@ -93,10 +94,11 @@ const AddBuilderPopup = ({setShowAddPopup}: {setShowAddPopup: React.Dispatch<Rea
                         setResponseLoading(false)
                     );
                 }}>
-                    <FormInput labelFor="name" labelTitle="Name" inputName="name" inputType="text" value={builderDetails.name} setValue={changeBuilderDetails} placeholder="Enter name" />
-                    <FormInput labelFor="email" labelTitle="Email" inputName="email" inputType="email" value={builderDetails.email} setValue={changeBuilderDetails} placeholder="Enter email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
-                    <FormInput labelFor="phoneNo" labelTitle="Phone Number" inputName="phoneNo" inputType="text" value={builderDetails.phoneNo} setValue={changeBuilderDetails} placeholder="Enter phone number" />
-                    <FormInput labelFor="password" labelTitle="Password" inputName="password" inputType="password" value={builderDetails.password} setValue={changeBuilderDetails} placeholder="Enter Password" />
+                    <FormInput labelFor="name" labelTitle="Name" inputName="name" inputType="text" value={builderDetails.name} setValue={changeBuilderDetails} placeholder="Enter name" required={true} />
+                    <FormInput labelFor="companyName" labelTitle="Company Name" inputName="companyName" inputType="text" value={builderDetails.companyName} setValue={changeBuilderDetails} placeholder="Enter Company Name" required={true} />
+                    <FormInput labelFor="email" labelTitle="Email" inputName="email" inputType="email" value={builderDetails.email} setValue={changeBuilderDetails} placeholder="Enter email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required={true} />
+                    <FormInput labelFor="phoneNo" labelTitle="Phone Number" inputName="phoneNo" inputType="text" value={builderDetails.phoneNo} setValue={changeBuilderDetails} placeholder="Enter phone number" required={true} inputTitle='Enter valid mobile number' pattern='^[0-9+\s]*$' />
+                    <FormInput labelFor="password" labelTitle="Password" inputName="password" inputType="password" value={builderDetails.password} setValue={changeBuilderDetails} placeholder="Enter Password" required={true} inputTitle="Password should be 6-24 long containing atleat 1 Uppercase, 1 Lowercase, 1 Numeric and a special symbol." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,24}" />
 
                     <button type="submit" disabled={responseLoading} title="Add builder">{responseLoading ? (
                         <div className={styles.basic}></div>

@@ -40,8 +40,8 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
               <th>S.No</th>
               <th>Name</th>
               <th>Contact Number</th>
-              {builderType !== 'pending' && <th>Email</th>}
-              <th>RERA Number</th>
+              {/* {builderType !== 'pending' && <th>Email</th>} */}
+              <th>Email</th>
               <th>Details</th>
               {builderType === 'pending' && <th>Options</th>}
             </tr>
@@ -55,8 +55,8 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
                           <td>{index + 1}</td>
                           <td>{builder.name ? builder.name : '-'}</td>
                           <td>{builder.phoneNumber ? builder.phoneNumber : '-'}</td>
-                          {builderType !== 'pending' && <td>{builder.email ? builder.email : '-'}</td>}
-                          <td>{builder.CompanyRERAnumber ? builder.CompanyRERAnumber : '-'}</td>
+                          <td>{builder.email ? builder.email : '-'}</td>
+                          {/* {builderType !== 'pending' && <td>{builder.email ? builder.email : '-'}</td>} */}
                           <td>
                             <div><button type='button' onClick  ={() => {setSelectedBuilderId(builder.id)}} title='More Details'><FaRegEye/><span>Details</span></button></div>
                           </td>
@@ -88,7 +88,7 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
 
         {/* Open Builder Popup */}
 
-        {selectedBuilderId && <BuilderDetails selectedBuilderId={selectedBuilderId} setSelectedBuilderId={setSelectedBuilderId} />}
+        {selectedBuilderId && <BuilderDetails selectedBuilderId={selectedBuilderId} setSelectedBuilderId={setSelectedBuilderId} builders={builders} />}
 
         {/* Open Builder Popup */}
 

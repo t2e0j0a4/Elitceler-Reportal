@@ -15,7 +15,6 @@ export type BuilderType = {
   phoneNumber: string;
   CompanyName: string;
   AboutBuilder: string;
-  CompanyRERAnumber: string;
   projects?: ProjectType[];
 };
 

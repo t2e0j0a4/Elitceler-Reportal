@@ -36,19 +36,19 @@ const RegisterForm = () => {
                 </div>
                 <div className={styles.form__input}>
                     <label htmlFor="name">Name*</label>
-                    <input required type="text" name='name' id='name' placeholder='Enter Name' />
+                    <input required type="text" name='name' id='name' placeholder='Enter Name' title='Enter your name' />
                 </div>
                 <div className={styles.form__input}>
                     <label htmlFor="email">Email*</label>
-                    <input required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$' type="email" name='email' id='email' placeholder='Enter Email' />
+                    <input required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$' type="email" name='email' id='email' placeholder='Enter Email' title='Enter your email' />
                 </div>
                 <div className={styles.form__input}>
                     <label htmlFor="phoneNumber">Phone Number*</label>
-                    <input required type="text" name='phoneNumber' id='phoneNumber' placeholder='Enter Phone Number' />
+                    <input required type="text" name='phoneNumber' id='phoneNumber' placeholder='Enter Phone Number' title='Enter valid mobile number' pattern='^[0-9+\s]*$' />
                 </div>
                 <div className={styles.form__input}>
                     <label htmlFor="password">Password*</label>
-                    <input required type="password" name='password' id='password' placeholder='Enter Password'/>
+                    <input required type="password" name='password' id='password' placeholder='Enter Password' title="Password should be 6-24 long containing atleat 1 Uppercase, 1 Lowercase, 1 Numeric and a special symbol." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,24}" />
                 </div>
                 <button disabled={responseLoading} type='submit'>{responseLoading ? (
                     <div className={styles.basic}></div>

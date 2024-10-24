@@ -128,9 +128,9 @@
   }
 }
 
-@media all and (max-width: 400px) {
+/* @media all and (max-width: 400px) {
   .table__body tr td:nth-child(2),
   .table__head tr th:nth-child(2) {
     display: none;
   }
-}
+} */
