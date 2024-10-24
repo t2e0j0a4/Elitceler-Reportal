@@ -82,8 +82,12 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
                             builderType === 'pending' && (
                               <td>
                                 <div>
-                                  <button type='button' title='Accept' disabled={updationLoad} aria-disabled={updationLoad}><LuCheck fontSize={15} onClick={() => {updateBuilderStatus('APPROVED', builder.id)}} /><span>Accept</span></button>
-                                  <button type='button' title='Reject' disabled={updationLoad} aria-disabled={updationLoad}><RiCloseLine fontSize={15} onClick={() => {updateBuilderStatus('REJECTED', builder.id)}} /><span>Reject</span></button>
+                                  <button type='button' title='Accept' disabled={updationLoad} aria-disabled={updationLoad} onClick={() => {
+                                    updateBuilderStatus('APPROVED', builder.id)
+                                  }}><LuCheck fontSize={15} /><span>Accept</span></button>
+                                  <button type='button' title='Reject' disabled={updationLoad} aria-disabled={updationLoad} onClick={() => {
+                                    updateBuilderStatus('REJECTED', builder.id)
+                                  }}><RiCloseLine fontSize={15}/><span>Reject</span></button>
                                 </div>
                               </td>
                             )
