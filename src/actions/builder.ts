@@ -1,6 +1,7 @@
 'use server';
 
 import { getAuthToken } from "@/utils/getAuthToken";
+import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache";
 
 // 1. New builder by Admin - name, phoneNo, email, password
@@ -100,4 +101,63 @@ export async function fetchBuilderStatus() {
             message: 'Internal Server Issues'
         }
     }
+}
+
+// 3. Update Pending status
+
+export async function updatePendingBuilder(status: 'APPROVED' | 'REJECTED', builderId: string) {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    const updation = {
+        status: status
+    };
+
+    try {
+
+        const updateVerificationStatus = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/updateBuilderStatus/${builderId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(updation)
+        });
+
+        const updatedStatus = await updateVerificationStatus.json();
+        console.log(updatedStatus);
+
+        if (!updateVerificationStatus.ok) {
+            if (updateVerificationStatus.status === 400) {
+                return {
+                    status: 'error',
+                    message: updatedStatus.error as string
+                }
+            }
+            return {
+                status: 'error',
+                message: 'Some issue registering. Try again!'
+            }
+        }
+
+        // return {
+        //     status: 'success',
+        //     message: 'Builder status changed!'
+        // }
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+
+    revalidatePath('/dashboard/builders');
 }

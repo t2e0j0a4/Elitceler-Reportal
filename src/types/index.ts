@@ -19,6 +19,12 @@ export type BuilderType = {
 };
 
 export type ApartmentDetails = {
+  
+  projectId?: string;
+  adminId?: string;
+  assignedBuilderID?: string;
+  apartmentID?: string;
+
   name: string;
   description: string;
   reraID: string;
@@ -42,13 +48,13 @@ export type ApartmentDetails = {
   videoLink: string;
   projectHighlightsPoints: string;
 
-  amenities: string[],
-  clubHouseAmenities: string[],
-  OutdoorAmenities: string[],
-  
-  nearByHighlights: string[],
+  amenities: string[];
+  clubHouseAmenities: string[];
+  OutdoorAmenities: string[];
+
+  nearByHighlights: string[];
   bhkType: string[];
-  
+
   siteMap: File[];
   masterPlan: File[];
   elevationImages: File[];
@@ -58,17 +64,21 @@ export type ApartmentDetails = {
   brochurePdf: File[];
   priceSheet: File[];
   projectHighlights: File[];
-
 };
 
 export type VillaDetails = {
+  projectId?: string;
+  adminId?: string;
+  villaID?: string;
+  assignedBuilderID?: string | null;
+
   villaName: string;
   villaLocation: string;
   villaSize: string;
   villaFacing: string;
   basePricePerSqft: string;
   launchDate: string;
-  possessionDate: string
+  possessionDate: string;
   villasConfiguration: string;
   villasType: string;
   villaSizeStarting: string;
@@ -89,6 +99,10 @@ export type VillaDetails = {
 };
 
 export type PlotDetails = {
+  projectId?: string;
+  adminId?: string;
+  assignedBuilderID?: string | null;
+
   plotName: string;
   plotLocation: string;
   plotLayoutSize: string;
@@ -117,4 +131,4 @@ export type BuildersDataType = {
   approvedBuilders: BuilderType[];
   pendingBuilders: BuilderType[];
   rejectedBuilders: BuilderType[];
-}
+};

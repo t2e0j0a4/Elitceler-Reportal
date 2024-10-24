@@ -225,3 +225,119 @@ export async function updateBuilderWithProject(projectType: 'plot' | 'apartment'
         }
     }
 }
+
+// *****************************************************************
+
+// 5. Fetch all admin added plots
+
+export async function fetchAllAdminPlots() {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    try {
+
+        const plotsResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/getAllAdminPlots`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        if (!plotsResponse.ok) {
+            throw new Error('Issues fetching plots. Try again!')
+        }
+
+        const plotsData = await plotsResponse.json();
+
+        return plotsData;
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+}
+
+// 6. Fetch all admin added villas
+
+export async function fetchAllAdminVillas() {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    try {
+
+        const villasResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/getAllAdminVillas`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        if (!villasResponse.ok) {
+            throw new Error('Issues fetching villas. Try again!')
+        }
+
+        const villasData = await villasResponse.json();
+
+        return villasData;
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+}
+
+// 7. Fetch all admin added villas
+
+export async function fetchAllAdminApartments() {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    try {
+
+        const apartmentsResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/getAllAdminApartment`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        if (!apartmentsResponse.ok) {
+            throw new Error('Issues fetching apartments. Try again!')
+        }
+
+        const apartmentsData = await apartmentsResponse.json();
+
+        return apartmentsData;
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+}

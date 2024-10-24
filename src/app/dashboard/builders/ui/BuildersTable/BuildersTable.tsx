@@ -15,6 +15,8 @@ import BuilderDetails from "../BuilderDetails/BuilderDetails";
 
 // Components
 import TableToggle from "@/components/TableToggle/TableToggle";
+import { updatePendingBuilder } from "@/actions/builder";
+import createToast from "@/utils/createToast";
 
 const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: BuilderType[], totalBuilders: number, builderType: 'approved' | 'pending' | 'rejected' }) => {
 
@@ -27,6 +29,22 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
     }, [builderType]);
 
     const [selectedBuilderId, setSelectedBuilderId] = useState<string>('');
+
+    const [updationLoad, setUpdationLoad] = useState(false);
+
+
+    const updateBuilderStatus = async (status: 'APPROVED' | 'REJECTED', builderId: string) => {
+      console.log('Hello');
+      setUpdationLoad(true);
+      const toastId = createToast('loading', 'Updating Status...');
+      const statusChange = await updatePendingBuilder(status, builderId);
+      if (statusChange === undefined) {
+        createToast('success', 'Status updated successfully', toastId);
+      } else {
+        createToast('error', statusChange.message ? statusChange.message : 'Issue updating status', toastId);
+      }
+      setUpdationLoad(false);
+    }
 
     return (
       <section className={styles.builders__main}>
@@ -64,8 +82,8 @@ const BuildersTable = ({ builders, totalBuilders, builderType }: { builders: Bui
                             builderType === 'pending' && (
                               <td>
                                 <div>
-                                  <button type='button' title='Accept'><LuCheck fontSize={15} /><span>Accept</span></button>
-                                  <button type='button' title='Reject'><RiCloseLine fontSize={15} /><span>Reject</span></button>
+                                  <button type='button' title='Accept' disabled={updationLoad} aria-disabled={updationLoad}><LuCheck fontSize={15} onClick={() => {updateBuilderStatus('APPROVED', builder.id)}} /><span>Accept</span></button>
+                                  <button type='button' title='Reject' disabled={updationLoad} aria-disabled={updationLoad}><RiCloseLine fontSize={15} onClick={() => {updateBuilderStatus('REJECTED', builder.id)}} /><span>Reject</span></button>
                                 </div>
                               </td>
                             )

@@ -85,8 +85,14 @@
     border-color 0.3s ease, outline 0.3s ease;
 }
 
+.table__body td button:disabled {
+  background-color: var(--c-primaryTint);
+  color: var(--c-white);
+  cursor: not-allowed;
+}
+
 @media (pointer: fine) and (hover: hover) {
-  .table__body td button:is(:hover, :focus-visible) {
+  .table__body td button:not(:disabled):is(:hover, :focus-visible) {
     border-color: var(--c-primaryShade);
     background-color: var(--c-primaryShade);
     color: var(--c-white);
