@@ -143,7 +143,7 @@ export async function updatePendingBuilder(status: 'APPROVED' | 'REJECTED', buil
             }
             return {
                 status: 'error',
-                message: 'Some issue registering. Try again!'
+                message: 'Some issue updating status. Try again!'
             }
         }
 

@@ -1,6 +1,7 @@
 "use server";
 
 import { getAuthToken } from "@/utils/getAuthToken";
+import { revalidatePath } from "next/cache";
 
 // 1. Create New Villa
 
@@ -380,34 +381,104 @@ export async function fetchAllBuilderProjects() {
     }
 }
 
-/*
+// 9. Update Builder Project Status - projectId
 
-{
-    message: '',
-    apartment: {
-        count: 1,
-        categorizedApat: {
-            PENDING: [],
-            APPROVED: [],
-            REJECTED: []
-        }
-    },
-    villa: {
-        count: 2,
-        categorizedVilla: {
-            PENDING: [],
-            APPROVED: [],
-            REJECTED: []
-        }
-    },
-    plots: {
-        count: 3,
-        categorizedPlots: {
-            PENDING: [],
-            APPROVED: [],
-            REJECTED: []
+export async function updateBuilderProjectStatus(status: 'APPROVED' | 'REJECTED', projectId: string) {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
         }
     }
+    
+    const updation = {
+        status: status
+    };
+
+    try {
+
+        const updateProjectStatusResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/updateBuilderProjectStatus/${projectId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(updation)
+        });
+
+        const updatedStatus = await updateProjectStatusResponse.json();
+        console.log(updatedStatus);
+
+        if (!updateProjectStatusResponse.ok) {
+            if (updateProjectStatusResponse.status === 400) {
+                return {
+                    status: 'error',
+                    message: updatedStatus.error as string
+                }
+            }
+            return {
+                status: 'error',
+                message: 'Some issue updating status. Try again!'
+            }
+        }
+
+        return {
+            status: 'success',
+            message: 'Project status changed!'
+        }
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        }
+    }
+
+    revalidatePath('/dashboard/projects/builders');
 }
 
-*/
+// 10. Fetch admin single project details - Apartment, Villa, plots
+
+export async function fetchAdminSingleProjectDetails(projectId: string, projectType: 'apartment' | 'plot' | 'villa') {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    const queryString = projectType === 'apartment' ? `getAdminApartmentDetails/${projectId}` : projectType === 'plot' ? `getAdminPlotDetails/${projectId}` : `getAdminVillaDetails/${projectId}`
+
+    try {
+
+        const adminSingleProjectDetails = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/${queryString}`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        if (!adminSingleProjectDetails.ok) {
+            return {
+                status: 'error',
+                message: 'Failed to fetch project details. Please try again!'
+            }
+        }
+
+        const projectDetails = await adminSingleProjectDetails.json();
+
+        return projectDetails;
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        } 
+    }
+}
