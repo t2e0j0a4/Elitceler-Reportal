@@ -79,7 +79,7 @@ const KeyHighlights = ({apartmentDetails, setApartmentDetails}: {apartmentDetail
         <>
             <div className={styles.key__highlights}>
                 <FormSelect options={highlightScope} optionPlaceholder='Key Highlights' selectedOption={selectedHighlightScope} setSelectedOption={setselectedHighlightScope} />
-                <input type="text" name='destination' placeholder='Destination - Distance' title='Destination - Distance' value={highlightOtherInfo.destination} onChange={changeHighlight} />
+                <input type="text" name='destination' placeholder='Destination - Distance(km)' title='Destination - Distance' value={highlightOtherInfo.destination} onChange={changeHighlight} />
                 <input type="text" name='timeTaken' placeholder='Time Taken' title='Time Taken' value={highlightOtherInfo.timeTaken} onChange={changeHighlight} />
                 <button type='button' title='Add' aria-label='Add' onClick={addNewHighlight}>Add</button>
             </div>

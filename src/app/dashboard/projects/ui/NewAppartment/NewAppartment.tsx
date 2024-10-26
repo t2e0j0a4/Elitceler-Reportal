@@ -303,7 +303,7 @@ const Page1 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
       </div>
       <div className={styles.multi__fields}>
         <FormInput labelFor='pricePerSquareFeetRate' labelTitle='Base Price (INR)' inputType='text' inputName='pricePerSquareFeetRate' placeholder='Ex: 25000' value={apartmentDetails.pricePerSquareFeetRate} setValue={changeApartmentDetails} />
-        <FormInput labelFor='totalArea' labelTitle='Total Area (Sq.ft)' inputType='text' inputName='totalArea' placeholder='Ex: 10000' value={apartmentDetails.totalArea} setValue={changeApartmentDetails} />
+        {/* <FormInput labelFor='totalArea' labelTitle='Total Area (Sq.ft)' inputType='text' inputName='totalArea' placeholder='Ex: 10000' value={apartmentDetails.totalArea} setValue={changeApartmentDetails} /> */}
       </div>
       <div className={styles.multi__fields}>
         <FormInput labelFor='projectSize' labelTitle='Project Size (in acres)' inputType='text' inputName='projectSize' placeholder='Ex: 25' value={apartmentDetails.projectSize} setValue={changeApartmentDetails} />
@@ -435,8 +435,8 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
       <KeyHighlights apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
 
       <FormSelect options={constructionTypes} optionPlaceholder='Select construction type' selectedOption={selctedConstructionType} setSelectedOption={setSelctedConstructionType} />
-      <FormInput labelFor='ClubHouseSize' labelTitle='Club House Size' inputType='text' inputName='ClubHouseSize' placeholder='Enter Club house size' value={apartmentDetails.ClubHouseSize} setValue={changeApartmentDetails} />
-      <FormInput labelFor='totalOpenSpace' labelTitle='Total Open Space' inputType='text' inputName='totalOpenSpace' placeholder='Enter total open space' value={apartmentDetails.totalOpenSpace} setValue={changeApartmentDetails} />
+      <FormInput labelFor='ClubHouseSize' labelTitle='Club House Size (in Sq.ft)' inputType='text' inputName='ClubHouseSize' placeholder='Enter Club house size' value={apartmentDetails.ClubHouseSize} setValue={changeApartmentDetails} />
+      <FormInput labelFor='totalOpenSpace' labelTitle='Total Open Space (in %)' inputType='text' inputName='totalOpenSpace' placeholder='Enter total open space' value={apartmentDetails.totalOpenSpace} setValue={changeApartmentDetails} />
     </>
   )
 }

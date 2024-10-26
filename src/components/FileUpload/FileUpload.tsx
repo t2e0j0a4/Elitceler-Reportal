@@ -38,7 +38,7 @@ const FileUpload: React.FC<FileUploaderProps> = ({labelFor, labelTitle, files, s
                     <span>PDF and Image files upto 50MB, Up to 20 files allowed</span>
                 </div>
                 <label htmlFor={labelFor}>Upload Now</label>
-                <input type="file" id={labelFor} multiple accept='.pdf, .jpeg, .jpg, .svg, .png' onChange={handleFileChange}/>
+                <input type="file" id={labelFor} multiple onChange={handleFileChange}/>
             </div>
 
 
