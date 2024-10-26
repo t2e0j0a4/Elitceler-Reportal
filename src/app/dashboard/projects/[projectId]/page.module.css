@@ -13,7 +13,7 @@
     color: var(--c-black);
 }
 
-.dashboard__head a {
+.dashboard__head a, .option__btns button, .option__btns a {
     flex: 0 0 auto;
     text-decoration: none;
     padding: 0.4rem 0.5rem;
@@ -31,6 +31,25 @@
     cursor: pointer;
     transition: color 0.3s ease, background-color 0.3s ease;
     outline: none;
+}
+
+.option__btns {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.3rem;
+    margin: 0.8rem 0;
+}
+
+.option__btns button, .option__btns a {
+    padding: 0.36rem 0.5rem;
+}
+
+.option__btns button:disabled {
+    background-color: var(--c-primaryTint);
+    color: var(--c-white);
+    cursor: not-allowed;
 }
 
 .details__main {
@@ -137,7 +156,7 @@
 }
 
 @media (hover:hover) and (pointer: fine) {
-    .dashboard__head a:is(:hover, :focus-visible), .image a:is(:hover, :focus-visible) {
+    .dashboard__head a:is(:hover, :focus-visible), .image a:is(:hover, :focus-visible), .option__btns button:not(:disabled):is(:hover, :focus-visible), .option__btns a:is(:hover, :focus-visible) {
         background-color: var(--c-primary);
         color: var(--c-white);
     }

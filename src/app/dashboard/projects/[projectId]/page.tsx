@@ -12,7 +12,8 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FetchAdminApartmentDetails, FetchAdminPlotDetails, FetchAdminVillaDetails } from '@/types';
 
 // Actions
-import { fetchAdminSingleProjectDetails } from '@/actions/projects';
+import { deleteAdminProject, fetchAdminSingleProjectDetails } from '@/actions/projects';
+import createToast from '@/utils/createToast';
 
 const ProjectDetails = ({params, searchParams}: {params: {projectId: string}, searchParams: {type: 'apartment' | 'plot' | 'villa'}}) => {
 
@@ -32,6 +33,22 @@ const ProjectDetails = ({params, searchParams}: {params: {projectId: string}, se
         // eslint-disable-next-line
     }, []);
 
+    const [btnLoad, setBtnLoad] = useState(false);
+
+    const deleteAProject = async () => {
+        if (params.projectId && searchParams.type) {
+            setBtnLoad(true);
+            const toastId = createToast('loading', 'Deleting project...');
+            const deleteResponse = await deleteAdminProject(params.projectId, searchParams.type);
+            if (deleteResponse === undefined) {
+                createToast('success', 'Delete successfully! Redirecting...', toastId);
+            } else {
+                createToast('error', deleteResponse.message ? deleteResponse.message : 'Issue deleting project...', toastId);
+            }
+            setBtnLoad(false);
+        }
+    }
+
     if (!params.projectId) {
         return (<p>Invalid project selected.</p>)
     }
@@ -46,6 +63,15 @@ const ProjectDetails = ({params, searchParams}: {params: {projectId: string}, se
             </div>
 
             {/* Head */}
+
+            {/* Edit & delete button */}
+
+            <div className={styles.option__btns}>
+                <button type='button' title='Delete' disabled={btnLoad} onClick={deleteAProject}>Delete</button>
+                <Link href={`/dashboard/projects/${params.projectId}/edit?type=${searchParams.type}`}>Edit</Link>
+            </div>
+
+            {/* Edit & delete button */}
 
             {/* Details */}
 
@@ -108,11 +134,11 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
             </div>
             <div className={styles.detail}>
                 <p>Latitude</p>
-                <p>{projectDetails.Latitude ? projectDetails.Latitude : '-'}</p>
+                <p>{projectDetails.latitude ? projectDetails.latitude : '-'}</p>
             </div>
             <div className={styles.detail}>
                 <p>Longitude</p>
-                <p>{projectDetails.Longitude ? projectDetails.Longitude : '-'}</p>
+                <p>{projectDetails.longitude ? projectDetails.longitude : '-'}</p>
             </div>
             <div className={styles.detail}>
                 <p>Landmark</p>
@@ -199,37 +225,189 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                 <p>{projectDetails.projectHighlightsPoints.length !== 0 ? projectDetails.projectHighlightsPoints.join(', ') : '-'}</p>
             </div>
 
-            {
-                projectDetails.projectMedia ? (
-
-                    projectDetails.projectMedia.map((media, index) => {
-                        return (
-                            <div key={index} className={styles.detail__images}>
-                                <p>{media.title ? media.title : '-'}</p>
-                                <div className={styles.display__images}>
-                                    {
-                                        media.images.length !== 0 ? (
-                                            media.images.map((image, index) => {
-                                                return (
-                                                    <div className={styles.image} key={index}>
-                                                        <Image src={image} alt={media.title} width={240} height={210} />
-                                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
-                                                    </div>
-                                                )
-                                            }) 
-                                        ) : (
-                                            <p>No media exists...</p>
-                                        )
-                                    }
-                                </div>
-                            </div>
+            <div className={styles.detail__images}>
+                <p>Site Map</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['siteMap'].length !== 0 ? (
+                            projectDetails.projectMedia['siteMap'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Site Map' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
                         )
-                    })
+                    }
+                </div>
+            </div>
 
-                ) : (
-                    <p>No Media Exists...</p>
-                )
-            }
+            <div className={styles.detail__images}>
+                <p>Master Plan</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['masterPlan'].length !== 0 ? (
+                            projectDetails.projectMedia['masterPlan'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Master Plan' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div className={styles.detail__images}>
+                <p>Elevation Images</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['elevationImages'].length !== 0 ? (
+                            projectDetails.projectMedia['elevationImages'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Elevation Images' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div className={styles.detail__images}>
+                <p>Floor plans</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['floorPlanPdf'].length !== 0 ? (
+                            projectDetails.projectMedia['floorPlanPdf'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Floor plans' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div className={styles.detail__images}>
+                <p>Brochures</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['brochurePdf'].length !== 0 ? (
+                            projectDetails.projectMedia['brochurePdf'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Brochures' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            
+            <div className={styles.detail__images}>
+                <p>Price Sheet</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['priceSheet'].length !== 0 ? (
+                            projectDetails.projectMedia['priceSheet'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Price Sheet' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div className={styles.detail__images}>
+                <p>Amenities</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['amenitiesImages'].length !== 0 ? (
+                            projectDetails.projectMedia['amenitiesImages'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Amenities' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div className={styles.detail__images}>
+                <p>RERA Certificate</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['reraCertificate'].length !== 0 ? (
+                            projectDetails.projectMedia['reraCertificate'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='RERA Certificate' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div className={styles.detail__images}>
+                <p>Project highlights</p>
+                <div className={styles.display__images}>
+                    {
+                        projectDetails.projectMedia['projectHighlights'].length !== 0 ? (
+                            projectDetails.projectMedia['projectHighlights'].map((image, index) => {
+                                return (
+                                    <div className={styles.image} key={index}>
+                                        <Image src={image} alt='Project highlights' width={240} height={210} />
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                )
+                            }) 
+                        ) : (
+                            <p>No media exists...</p>
+                        )
+                    }
+                </div>
+            </div>
+
+            
+            
         </>
     )
 }

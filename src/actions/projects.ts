@@ -2,8 +2,9 @@
 
 import { getAuthToken } from "@/utils/getAuthToken";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-// 1. Create New Villa
+// 1. Create New Villa - Admin
 
 export async function addNewVilla(formData: FormData, builderId: string) {
     const authToken = await getAuthToken();
@@ -31,7 +32,12 @@ export async function addNewVilla(formData: FormData, builderId: string) {
         const villaAddData = await villaAddResponse.json();
 
         if (!villaAddResponse.ok) {
-            console.log(villaAddData)
+            if (villaAddResponse.status === 400 && !villaAddResponse.ok) {
+                return {
+                    status: 'error',
+                    message: villaAddData.error
+                }
+            }
             return {
                 status: 'error',
                 message: 'Issues adding villa. Try again'
@@ -52,7 +58,7 @@ export async function addNewVilla(formData: FormData, builderId: string) {
 }
 
 
-// 2. Create New Plot
+// 2. Create New Plot - Admin
 
 export async function addNewPlot(formData: FormData, builderId: string) {
     const authToken = await getAuthToken();
@@ -81,6 +87,12 @@ export async function addNewPlot(formData: FormData, builderId: string) {
         // console.log(plotAddData);
 
         if (!plotAddResponse.ok) {
+            if (plotAddResponse.status === 400 && !plotAddResponse.ok) {
+                return {
+                    status: 'error',
+                    message: plotAddData.error
+                }
+            }
             return {
                 status: 'error',
                 message: 'Issues adding plot. Try again'
@@ -100,7 +112,7 @@ export async function addNewPlot(formData: FormData, builderId: string) {
 }
 
 
-// 3. Create New Appartment
+// 3. Create New Appartment - Admin
 
 export async function addNewApartment(formData: FormData, builderId: string) {
     const authToken = await getAuthToken();
@@ -128,7 +140,12 @@ export async function addNewApartment(formData: FormData, builderId: string) {
         const apartmentAddData = await apartmentAddResponse.json();
 
         if (!apartmentAddResponse.ok) {
-            console.log(apartmentAddData)
+            if (apartmentAddResponse.status === 400 && !apartmentAddResponse.ok) {
+                return {
+                    status: 'error',
+                    message: apartmentAddData.error
+                }
+            }
             return {
                 status: 'error',
                 message: 'Issues adding apartment. Try again'
@@ -150,7 +167,7 @@ export async function addNewApartment(formData: FormData, builderId: string) {
 }
 
 
-// 4. Update Builder with Project
+// 4. Update Builder with Project - Admin
 
 export async function updateBuilderWithProject(projectType: 'plot' | 'apartment' | 'villa', builderId: string, projectId: string) {
     const authToken = await getAuthToken();
@@ -227,9 +244,7 @@ export async function updateBuilderWithProject(projectType: 'plot' | 'apartment'
     }
 }
 
-// *****************************************************************
-
-// 5. Fetch all admin added plots
+// 5. Fetch all admin added plots - Admin
 
 export async function fetchAllAdminPlots() {
     const authToken = await getAuthToken();
@@ -267,7 +282,7 @@ export async function fetchAllAdminPlots() {
     }
 }
 
-// 6. Fetch all admin added villas
+// 6. Fetch all admin added villas - Admin
 
 export async function fetchAllAdminVillas() {
     const authToken = await getAuthToken();
@@ -305,7 +320,7 @@ export async function fetchAllAdminVillas() {
     }
 }
 
-// 7. Fetch all admin added villas
+// 7. Fetch all admin added villas - Admin
 
 export async function fetchAllAdminApartments() {
     const authToken = await getAuthToken();
@@ -343,7 +358,155 @@ export async function fetchAllAdminApartments() {
     }
 }
 
-// 8. Fetch all builders projects - apartments, villas, plots
+// 8. Fetch admin single project details - Admin
+
+export async function fetchAdminSingleProjectDetails(projectId: string, projectType: 'apartment' | 'plot' | 'villa') {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    const queryString = projectType === 'apartment' ? `getAdminApartmentDetails/${projectId}` : projectType === 'plot' ? `getAdminPlotDetails/${projectId}` : `getAdminVillaDetails/${projectId}`
+
+    try {
+
+        const adminSingleProjectDetails = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/${queryString}`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        if (!adminSingleProjectDetails.ok) {
+            return {
+                status: 'error',
+                message: 'Failed to fetch project details. Please try again!'
+            }
+        }
+
+        const projectDetails = await adminSingleProjectDetails.json();
+        return projectDetails;
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        } 
+    }
+}
+
+// 9. Delete Apartment, Villa, plot by projectId
+
+export async function deleteAdminProject(projectId: string, projectType: 'apartment' | 'plot' | 'villa') {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    const queryString = projectType === 'apartment' ? `deleteAdminApartment/${projectId}` : projectType === 'plot' ? `deleteAdminPlot/${projectId}` : `deleteAdminVilla/${projectId}`
+
+    try {
+        
+        const deleteSingleProject = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/${queryString}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        const deleteProjectData = await deleteSingleProject.json();
+        console.log(deleteProjectData)
+
+        if (!deleteSingleProject.ok) {
+            return {
+                status: 'error',
+                message: 'Issue deleting project. Try again!'
+            }
+        }
+
+        // return {
+        //     status: 'success',
+        //     message: deleteProjectData.message
+        // }
+
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        } 
+    }
+
+    redirect(`/dashboard/projects?projectType=${projectType}`);
+}
+
+// 10. Edit - Apartment, Plot, villa - Admin
+
+export async function editAdminProjectById(formData:FormData, projectId: string, projectType: 'apartment' | 'plot' | 'villa') {
+    const authToken = await getAuthToken();
+
+    if (!authToken) {
+        console.log('Admin Not Authorized!');
+        return {
+            status: 'error',
+            message: 'Unauthorized! Please Login.'
+        }
+    }
+
+    console.log(formData, projectId, projectType);
+
+    const queryString = projectType === 'apartment' ? `updateAdminOwnApartment/${projectId}` : projectType === 'plot' ? `updateAdminOwnPlot/${projectId}` : `updateAdminOwnVilla/${projectId}`
+
+
+    try {
+
+        const editSingleResponse = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/${queryString}`, {
+            method: 'PATCH',
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: formData
+        });
+
+        const editResponseData = await editSingleResponse.json();
+
+        console.log(editResponseData);
+
+        if (!editSingleResponse.ok) {
+            if (editSingleResponse.status === 400 && !editSingleResponse.ok) {
+                return {
+                    status: 'error',
+                    message: editResponseData.error
+                }
+            }
+            return {
+                status: 'error',
+                message: 'Issues updating apartment. Try again'
+            }
+        }
+        
+    } catch (error) {
+        return {
+            status: 'error',
+            message: 'Internal Server Issues'
+        } 
+    }
+
+    redirect(`/dashboard/projects/${projectId}?type=${projectType}`)
+}
+
+// ***********************************************************************************
+
+// 10. Fetch all builders projects - Builder
 
 export async function fetchAllBuilderProjects() {
     const authToken = await getAuthToken();
@@ -381,7 +544,7 @@ export async function fetchAllBuilderProjects() {
     }
 }
 
-// 9. Update Builder Project Status - projectId
+// 11. Update Builder Project Status - projectId
 
 export async function updateBuilderProjectStatus(status: 'APPROVED' | 'REJECTED', projectId: string) {
     const authToken = await getAuthToken();
@@ -438,47 +601,4 @@ export async function updateBuilderProjectStatus(status: 'APPROVED' | 'REJECTED'
     }
 
     revalidatePath('/dashboard/projects/builders');
-}
-
-// 10. Fetch admin single project details - Apartment, Villa, plots
-
-export async function fetchAdminSingleProjectDetails(projectId: string, projectType: 'apartment' | 'plot' | 'villa') {
-    const authToken = await getAuthToken();
-
-    if (!authToken) {
-        console.log('Admin Not Authorized!');
-        return {
-            status: 'error',
-            message: 'Unauthorized! Please Login.'
-        }
-    }
-
-    const queryString = projectType === 'apartment' ? `getAdminApartmentDetails/${projectId}` : projectType === 'plot' ? `getAdminPlotDetails/${projectId}` : `getAdminVillaDetails/${projectId}`
-
-    try {
-
-        const adminSingleProjectDetails = await fetch(`${process.env.SERVER_HOST_URL}/api/v1/admin/${queryString}`, {
-            method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${authToken}`
-            }
-        });
-
-        if (!adminSingleProjectDetails.ok) {
-            return {
-                status: 'error',
-                message: 'Failed to fetch project details. Please try again!'
-            }
-        }
-
-        const projectDetails = await adminSingleProjectDetails.json();
-
-        return projectDetails;
-        
-    } catch (error) {
-        return {
-            status: 'error',
-            message: 'Internal Server Issues'
-        } 
-    }
 }

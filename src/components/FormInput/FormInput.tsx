@@ -5,7 +5,7 @@ const FormInput = ({labelFor, labelTitle, inputName, placeholder, inputType, val
   return (
     <div className={styles.form__input}>
         <label htmlFor={labelFor}>{labelTitle}</label>
-        <input type={inputType} id={labelFor} defaultValue={inputType === 'date' ? new Date().toISOString().split("T")[0] : undefined} name={inputName} aria-label={labelTitle} required={required} title={inputTitle ? inputTitle : labelTitle} placeholder={placeholder} value={value} onChange={setValue} pattern={pattern} />
+        <input type={inputType} id={labelFor}  name={inputName} aria-label={labelTitle} required={required} title={inputTitle ? inputTitle : labelTitle} placeholder={placeholder} value={value} onChange={setValue} pattern={pattern} />
     </div>
   )
 }

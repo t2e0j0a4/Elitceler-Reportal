@@ -4,7 +4,6 @@ import styles from "./NewAppartment.module.css";
 import React, {useEffect, useState} from 'react';
 
 // Components
-import BHKType from './BHKType';
 import KeyHighlights from './KeyHighlights';
 import FormInput from '@/components/FormInput/FormInput';
 import FormSelect from '@/components/FormSelect/FormSelect';
@@ -42,7 +41,9 @@ const NewAppartment = ({builderId} : {builderId: string}) => {
     totalArea: '',
     latitude: '',
     longitude: '',
-    landmark: '-',
+
+    landmark: '',
+
     projectSize: '',
     noOfFloors: '',
     noOfFlats: '',
@@ -61,7 +62,11 @@ const NewAppartment = ({builderId} : {builderId: string}) => {
     OutdoorAmenities: [],
     nearByHighlights: [],
     
-    bhkType: [],
+    bhkType: '',
+    sizeInSqft: '',
+    facing: '',
+    basePrice: '',
+    unitPlanConfigFiles: [],
 
     siteMap: [],
     masterPlan: [],
@@ -116,14 +121,21 @@ const NewAppartment = ({builderId} : {builderId: string}) => {
       formData.append('clubHouseAmenities', apartmentDetails.clubHouseAmenities ? apartmentDetails.clubHouseAmenities.join(', ').trim() : '-');
       formData.append('OutdoorAmenities', apartmentDetails.OutdoorAmenities ? apartmentDetails.OutdoorAmenities.join(', ').trim() : '-');
       formData.append('nearByHighlights', apartmentDetails.nearByHighlights ? apartmentDetails.nearByHighlights.join(', ').trim() : '-');
-
-
-      // May change in future
       
-      formData.append('bhkType', apartmentDetails.bhkType ? apartmentDetails.bhkType.join(', ').trim() : '-');
-      formData.append('sizeInSqft', '--');
-      formData.append('facing', '--');
-      formData.append('basePrice', '--');
+      formData.append('bhkType', apartmentDetails.bhkType ? apartmentDetails.bhkType : '-');
+      formData.append('sizeInSqft', apartmentDetails.sizeInSqft ? apartmentDetails.sizeInSqft : '-');
+      formData.append('facing', apartmentDetails.facing ? apartmentDetails.facing : '-');
+      formData.append('basePrice', apartmentDetails.basePrice ? apartmentDetails.basePrice : '-');
+
+      if (apartmentDetails.unitPlanConfigFiles) {
+        apartmentDetails.unitPlanConfigFiles.forEach((file) => {
+          formData.append('unitPlanConfigFiles', file);
+        })
+      } else {
+        formData.append('unitPlanConfigFiles', '');
+      }
+
+      /* **************************************************************************************************************** */
 
       if (apartmentDetails.siteMap) {
         apartmentDetails.siteMap.forEach((file) => {
@@ -267,7 +279,7 @@ const NewAppartment = ({builderId} : {builderId: string}) => {
 
 export default NewAppartment;
 
-const Page1 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+export const Page1 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
 
   const projectTypeOptions = [
     {id: '1', name: 'Standalone'},
@@ -303,7 +315,7 @@ const Page1 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
       </div>
       <div className={styles.multi__fields}>
         <FormInput labelFor='pricePerSquareFeetRate' labelTitle='Base Price (INR)' inputType='text' inputName='pricePerSquareFeetRate' placeholder='Ex: 25000' value={apartmentDetails.pricePerSquareFeetRate} setValue={changeApartmentDetails} />
-        {/* <FormInput labelFor='totalArea' labelTitle='Total Area (Sq.ft)' inputType='text' inputName='totalArea' placeholder='Ex: 10000' value={apartmentDetails.totalArea} setValue={changeApartmentDetails} /> */}
+        <FormInput labelFor='landmark' labelTitle='Landmark' inputType='text' inputName='landmark' placeholder='Ex: ABC X Roads' value={apartmentDetails.landmark} setValue={changeApartmentDetails} />
       </div>
       <div className={styles.multi__fields}>
         <FormInput labelFor='projectSize' labelTitle='Project Size (in acres)' inputType='text' inputName='projectSize' placeholder='Ex: 25' value={apartmentDetails.projectSize} setValue={changeApartmentDetails} />
@@ -325,7 +337,7 @@ const Page1 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
   )
 }
 
-const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+export const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
 
   const constructionTypes = [
     {id: "1", name: "Red Brick"},
@@ -441,7 +453,7 @@ const Page2 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
   )
 }
 
-const Page3 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>}) => {
+export const Page3 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>}) => {
 
   const [repoSiteMap, setRepoSiteMap] = useState<File[]>(apartmentDetails.siteMap);
   const [repoMasterPlan, setRepoMasterPlan] = useState<File[]>(apartmentDetails.masterPlan);
@@ -463,7 +475,7 @@ const Page3 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: Apart
   )
 }
 
-const Page4 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>}) => {
+export const Page4 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>}) => {
 
   const [repoElevationImages, setRepoElevationImages] = useState<File[]>(apartmentDetails.elevationImages);
   const [repoAmenities, setrepoAmenities] = useState<File[]>(apartmentDetails.amenitiesImages);
@@ -483,7 +495,7 @@ const Page4 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: Apart
   )
 }
 
-const Page5 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>> }) => {
+export const Page5 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>> }) => {
 
   const [repoFloorPlan, setRepoFloorPlan] = useState<File[]>(apartmentDetails.floorPlanPdf);
   const [repoBrochure, setRepoBrochure] = useState<File[]>(apartmentDetails.brochurePdf);
@@ -505,17 +517,83 @@ const Page5 = ({apartmentDetails, setApartmentDetails}: {apartmentDetails: Apart
   )
 }
 
-const Page6 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+export const Page6 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails, showBHK = true}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void, showBHK?: boolean}) => {
+
+  const [repoUnitPlanConfigFiles, setRepoUnitPlanConfigFiles] = useState<File[]>(apartmentDetails.unitPlanConfigFiles);
+
+  useEffect(() => {
+
+    setApartmentDetails({...apartmentDetails, unitPlanConfigFiles: repoUnitPlanConfigFiles});
+
+    // eslint-disable-next-line
+  }, [repoUnitPlanConfigFiles]);
+
+  const bhkType = [
+    {id: '1', name: "2 BHK"},
+    {id: '2', name: "2.5 BHK"},
+    {id: '3', name: "3 BHK"},
+    {id: '4', name: "3.5 BHK"},
+    {id: '5', name: "4 BHK"},
+    {id: '6', name: "4+ BHK"},
+  ]
+
+  const [selectedBHKType, setselectedBHKType] = useState<{
+    id: string,
+    name: string
+  }>({
+    id: '',
+    name: apartmentDetails.bhkType
+  })
+
+  const facing = [
+    {id: '1', name: 'East'},
+    {id: '2', name: 'West'},
+    {id: '3', name: 'North'},
+    {id: '4', name: 'South'}
+  ]
+
+  const [selectedFacing, setSelectedFacing] = useState<{
+    id: string,
+    name: string
+  }>({
+    id: '',
+    name: apartmentDetails.facing
+  })
+
+  useEffect(() => {
+
+    if (selectedBHKType.id && selectedFacing.name) {
+      setApartmentDetails({...apartmentDetails, bhkType: selectedBHKType.name, facing: selectedFacing.name})
+    }
+
+    // eslint-disable-next-line
+  }, [selectedFacing, selectedBHKType]);
 
   return (
     <>
-      <BHKType apartmentDetails={apartmentDetails} setApartmentDetails={setApartmentDetails} />
+      {
+        showBHK ? (
+          <>
+            <FileUpload files={repoUnitPlanConfigFiles} setFiles={setRepoUnitPlanConfigFiles} labelFor='unitPlanConfigFiles' labelTitle='BHK unit plan config' />
+      
+            <div className={`${styles.multi__fields}`}>
+              <FormSelect options={bhkType} optionPlaceholder='BHK Type' selectedOption={selectedBHKType} setSelectedOption={setselectedBHKType} />
+              <FormInput labelFor='sizeInSqft' labelTitle='Size (sq.ft)' inputName='sizeInSqft' inputType='text' value={apartmentDetails.sizeInSqft} setValue={changeApartmentDetails} placeholder='Ex: 1450' />
+              <FormInput labelFor='basePrice' labelTitle='Base Price' inputName='basePrice' inputType='text' value={apartmentDetails.basePrice} setValue={changeApartmentDetails} placeholder='Ex: 2400000' />
+              <FormSelect options={facing} optionPlaceholder='Facing' selectedOption={selectedFacing} setSelectedOption={setSelectedFacing} />
+            </div>
+          </>
+        ) : (
+          <></>
+        )
+      }
+      
       <FormInput labelFor='videoLink' labelTitle='Video Link' inputType='text' inputName='videoLink' placeholder='Video Link (https only)' value={apartmentDetails.videoLink} setValue={changeApartmentDetails} />
     </>
   )
 }
 
-const Page7 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+export const Page7 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails, showFile = true}: {apartmentDetails: ApartmentDetails, setApartmentDetails: React.Dispatch<React.SetStateAction<ApartmentDetails>>, changeApartmentDetails: (e: React.ChangeEvent<HTMLInputElement>) => void, showFile?: boolean}) => {
 
   const [repoCertificates, setRepoCertificates] = useState<File[]>(apartmentDetails.reraCertificate);
 
@@ -530,7 +608,7 @@ const Page7 = ({apartmentDetails, setApartmentDetails, changeApartmentDetails}: 
     <>
       <FormInput labelFor='reraID' labelTitle='RERA ID' inputType='text' inputName='reraID' placeholder='12121232' value={apartmentDetails.reraID} setValue={changeApartmentDetails} />
       <FormInput labelFor='projectHighlightsPoints' labelTitle='Project Highlight Points' inputType='text' inputName='projectHighlightsPoints' placeholder='Project Highlight Points' value={apartmentDetails.projectHighlightsPoints} setValue={changeApartmentDetails} />
-      <FileUpload labelFor='reraCertificate' labelTitle='Upload Certificates' files={repoCertificates} setFiles={setRepoCertificates} />
+      {showFile &&  <FileUpload labelFor='reraCertificate' labelTitle='Upload Certificates' files={repoCertificates} setFiles={setRepoCertificates} />}
     </>
   )
 }
