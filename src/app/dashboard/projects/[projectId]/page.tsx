@@ -106,7 +106,7 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
         <>
             <div className={styles.detail}>
                 <p>Type</p>
-                <p>Plots</p>
+                <p>Apartments</p>
             </div>
             <div className={styles.detail}>
                 <p>RERA ID</p>
@@ -231,8 +231,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['siteMap'].length !== 0 ? (
                             projectDetails.projectMedia['siteMap'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Site Map</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Site Map' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -251,8 +257,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['masterPlan'].length !== 0 ? (
                             projectDetails.projectMedia['masterPlan'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Master Plan</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Master Plan' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -271,8 +283,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['elevationImages'].length !== 0 ? (
                             projectDetails.projectMedia['elevationImages'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Elevation Images</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Elevation Images' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -291,8 +309,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['floorPlanPdf'].length !== 0 ? (
                             projectDetails.projectMedia['floorPlanPdf'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Floor plans</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Floor plans' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -311,8 +335,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['brochurePdf'].length !== 0 ? (
                             projectDetails.projectMedia['brochurePdf'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Brochures</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Brochures' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -332,8 +362,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['priceSheet'].length !== 0 ? (
                             projectDetails.projectMedia['priceSheet'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Price Sheet</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Price Sheet' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -352,8 +388,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['amenitiesImages'].length !== 0 ? (
                             projectDetails.projectMedia['amenitiesImages'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Amenities</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Amenities' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -372,8 +414,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['reraCertificate'].length !== 0 ? (
                             projectDetails.projectMedia['reraCertificate'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>RERA Certificate</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='RERA Certificate' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
@@ -392,8 +440,14 @@ const ApartmentDetails = ({projectDetails}: {projectDetails: FetchAdminApartment
                     {
                         projectDetails.projectMedia['projectHighlights'].length !== 0 ? (
                             projectDetails.projectMedia['projectHighlights'].map((image, index) => {
-                                return (
-                                    <div className={styles.image} key={index}>
+                                return image.includes('.pdf') ? (
+                                    <div key={index} className={styles.file__pdf}>
+                                        <span>Project highlights</span>
+                                        <p>PDF</p>
+                                        <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
+                                    </div>
+                                ) : (
+                                     <div className={styles.image} key={index}>
                                         <Image src={image} alt='Project highlights' width={240} height={210} />
                                         <a download={true} target='_blank' href={image} title='Download' aria-label='Download'><IoMdArrowDown/></a>
                                     </div>
